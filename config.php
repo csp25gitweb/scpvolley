@@ -5,6 +5,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+
 // paramétrage BDD
 $params_bdd = array(
     'host' => '10.189.251.9',
@@ -13,4 +14,3 @@ $params_bdd = array(
     'pwd' => 'scp4',
     'port' => '5432',
 );
-
