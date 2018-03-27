@@ -7,9 +7,40 @@ abstract class DAO{
     
     abstract public function connect($params_bdd);
     
-    abstract public function exec($query, $params=null);
+    /*
+     * 
+     */
+    public function exec($query, $params=null) {
+        
+        if($this->db == null){
+            return false;
+        }
+        
+        $this->stmt = $this->db->prepare($query);
+        if($this->stmt === false){
+            return false;
+        }
+        
+        if($params != null){
+            foreach($params as $key => $value){
+                $this->stmt->bindValue($key, $value);
+            }
+        }
+        
+        return $this->stmt->execute();
+    }
     
-    abstract public function fetchAll();
+    /*
+     * 
+     */
+    public function fetchAll(){
+
+       if($this->stmt == null){
+           return null;
+       }
+       
+       return $this->stmt->fetchAll();
+    }
     
 }
 
