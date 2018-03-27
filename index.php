@@ -1,10 +1,20 @@
 <?php
 
-echo 'test';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+require('libs/Smarty.class.php');
+
+$smarty = null;
+$content = null;
+
+
+$smarty = new Smarty();
+$content = "Hello";
+
+$smarty->assign("content", $content);
+$smarty->Display('index.html');
+
+?>
 
