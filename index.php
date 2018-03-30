@@ -19,8 +19,7 @@ $smarty->Display('index.html');
 $array = array(':id_categorie'=>'1');
 
 
-$bdd = new postgresDAO();
-$bdd->connect($params_bdd);
+$bdd = postgresDAO::getInstance($params_bdd);
 
 $bdd->exec("SELECT * FROM categories WHERE id_categorie = :id_categorie ", $array);
 $result = $bdd->fetchAll();

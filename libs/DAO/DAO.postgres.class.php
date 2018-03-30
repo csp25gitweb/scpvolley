@@ -4,10 +4,17 @@ require('DAO.class.php');
 
 class postgresDAO extends DAO{
 
+    public static function getInstance($params_bdd){
+        if(is_null(self::$instance)) {
+            self::$instance = new postgresDAO($params_bdd);
+        }
+        return self::$instance;
+    }
+    
     /*
      * 
      */
-    public function connect($params_bdd) {
+    protected function connect($params_bdd) {
         
         $conn = 'pgsql:host='.$params_bdd['host'];
         $conn .= ';port='.$params_bdd['port'];
@@ -26,10 +33,7 @@ class postgresDAO extends DAO{
         return true;
     }
 
-    
-    
-    
-    
+
 }
 
 

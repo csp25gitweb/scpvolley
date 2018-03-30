@@ -2,10 +2,18 @@
 
 abstract class DAO{
 
+    protected static $instance = null;
+    
     protected $db = null;
     protected $stmt = null;
     
-    abstract public function connect($params_bdd);
+    protected function __construct($params_bdd) {
+        $this->connect($params_bdd);
+    }
+    
+    abstract public static function getInstance($params_bdd );
+  
+    abstract protected function connect($params_bdd);
     
     /*
      * 
