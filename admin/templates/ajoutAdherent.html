@@ -3,8 +3,12 @@
 <h1>Ajouter un adhérent</h1>
 <br/>
 
-<form method="POST" action="ajoutAdherent.php">
+<div id='ad_recap' style='display:none;'>
+       
+</div>
 
+<form id='ad_form' method="POST" action="ajoutAdherent.php">
+    <input type='hidden' name='form_post' value='1'>
     <label name='nom'>
         <p>Nom</p>
         <input type='text' name='ad_nom' id='ad_nom'>
@@ -20,21 +24,23 @@
         <input type='date' name='ad_naissance' id='ad_naissance'>
     </label>
     
-    <label name='licence'>
-        <p>Numéro de licence</p>
-        <input type='text' name='ad_licence' id='ad_licence'>
-    </label>
-    
     <label name='genre'>
         <p>Genre</p>
         <label><input type='radio' name='ad_genre' id='ad_genre' value='M'>Homme</label>
         <label><input type='radio' name='ad_genre' id='ad_genre' value='F'>Femme</label>
     </label>
+    
+    <label name='licence'>
+        <p>Numéro de licence</p>
+        <input type='text' name='ad_licence' id='ad_licence'>
+    </label>
+    
+    
 
 
     <br/>
     <br/>
-    <input type='submit' value='Valider'>
+    <input type='button' onclick='ajouterAdherent();return;' value='Valider'>
 </form>
 
 {include 'footer.html'}

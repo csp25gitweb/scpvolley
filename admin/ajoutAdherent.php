@@ -10,8 +10,8 @@ $titre = null;
 
 $titre = "SCP Volley - Administration - Ajouter un adhérent";
 
-$smarty = new Smarty();
 
+$smarty = new Smarty();
 
 $smarty->assign("titre", $titre);
 $smarty->Display("ajoutAdherent.html");
