@@ -28,6 +28,16 @@ if( isset($_POST['form_post']) ){
     getParam('ad_genre'     , $ad_genre);
     getParam('ad_licence'   , $ad_licence);
     
+    if(checkEmpty($ad_nom) || checkEmpty($ad_prenom) || checkEmpty($ad_naissance)
+            || checkEmpty($ad_genre) || checkEmpty($ad_licence) ){
+        exit("nok");
+    }
+    
+    
+    //traitement avant inscription
+    $ad_nom = strtoupper($ad_nom);
+    $ad_prenom = ucfirst($ad_prenom);
+    
     $login = $ad_nom .'.'. $ad_prenom;
     $mdp = "mdp";
     
@@ -47,10 +57,14 @@ if( isset($_POST['form_post']) ){
     $retour = $bdd->exec($requete, $monArray);
     
     if($retour === true){
-        $contenu = "<p>Adhérent inscrit avec succès</p>";
+        $contenu = "<fieldset>"
+                . "<legend>Récapitulatif</legend>"
+                . "<p>Adhérent inscrit avec succès</p>";
     }
     else{
-        $contenu = "<p>Erreur lors du traitement</p>";
+        $contenu = "<fieldset>"
+                . "<legend>Récapitulatif</legend>"
+                . "<p>Erreur lors du traitement</p>";
     }
     
     //TODO gérer l'affichage avec bootstrap pour aligner les informations
@@ -61,7 +75,8 @@ if( isset($_POST['form_post']) ){
             . "<br/>Prénom : " . $ad_prenom
             . "<br/>Date de naissance : " . $ad_naissance
             . "<br/>Genre : " . $ad_genre
-            . "<br/>Numéro de licence : " . $ad_licence;
+            . "<br/>Numéro de licence : " . $ad_licence
+            . "</fieldset>";
     
     echo $contenu;
 }

@@ -13,3 +13,14 @@ function getParam($param_name, &$stockage){
     $stockage = null;
     return false;
 }
+
+
+function checkEmpty($variable){
+    if($variable == null || strlen($variable) == 0){
+        return true;
+    }
+    
+    return false;
+}
+
+?>

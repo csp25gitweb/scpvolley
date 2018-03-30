@@ -11,7 +11,6 @@ function ajouterAdherent(){
             document.getElementById('ad_recap').style.display = 'block';
             var top = document.getElementById('ad_recap').offsetTop;
             window.scrollTo(0, top);
-            
             document.getElementById('ad_form').reset();
         }
     };

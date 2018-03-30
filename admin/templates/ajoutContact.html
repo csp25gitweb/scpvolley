@@ -4,6 +4,18 @@
 <br/>
 
 <form method="POST" action="ajoutContact.php">
+    
+    <label name='contact_adherent'>
+        <p>Adhérent auquel ajouter un contact</p>
+        
+        <select id='contact_id_adherent' name='contact_id_adherent'>
+            {foreach $adherents as $value}
+            <option value="{$value.id_adherent}">{$value.nom}&nbsp;{$value.prenom}&nbsp;(&nbsp;{$value.date_naissance}&nbsp;)</option>
+            {/foreach}
+        </select>
+        
+    </label>
+    
     <label name='contact_nom'>
         <p>Nom</p>
         <input type='text' name='contact_nom' id='contact_nom'>
