@@ -1,27 +1,33 @@
 <?php
+
 require('app/init.php');
 
+getParam('controller', $s_controller);
+if(checkEmpty($s_controller) ){
+    $s_controller = 'homepage';
+}
 
-$smarty = null;
-$content = null;
+switch($s_controller) {
+    case 'homepage':
+        require_once('src/controller/homepageController.class.php');
+        new homepageController();
+    break;
 
-/*
-$smarty = new Smarty();
-$content = "Hello";
+    case 'admin':
+        require_once('src/controller/adminController.class.php');
+        new adminController();
+    break;
 
-$smarty->assign("content", $content);
-$smarty->Display('index.html');
- */
+    case 'agenda':
+    break;
 
-$array = array(':id_categorie'=>'1');
+    case 'inscription':
+    break;
 
-
-$bdd = postgresDAO::getInstance();
-
-$bdd->exec("SELECT * FROM categories WHERE id_categorie = :id_categorie ", $array);
-$result = $bdd->fetchAll();
-
-print_r($result);
+    default:
+            // 404
+    break;
+}
 
 ?>
 
