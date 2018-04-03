@@ -7,11 +7,11 @@ abstract class DAO{
     protected $db = null;
     protected $stmt = null;
     
-    protected function __construct($params_bdd) {
-        $this->connect($params_bdd);
+    protected function __construct() {
+        $this->connect(unserialize(PARAMS_BDD));
     }
     
-    abstract public static function getInstance($params_bdd );
+    abstract public static function getInstance();
   
     abstract protected function connect($params_bdd);
     

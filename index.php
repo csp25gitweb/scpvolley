@@ -1,9 +1,6 @@
 <?php
-require('config.php');
+require('app/init.php');
 
-require('libs/DAO/DAO.postgres.class.php');
-
-require('libs/smarty/Smarty.class.php');
 
 $smarty = null;
 $content = null;
@@ -19,7 +16,7 @@ $smarty->Display('index.html');
 $array = array(':id_categorie'=>'1');
 
 
-$bdd = postgresDAO::getInstance($params_bdd);
+$bdd = postgresDAO::getInstance();
 
 $bdd->exec("SELECT * FROM categories WHERE id_categorie = :id_categorie ", $array);
 $result = $bdd->fetchAll();

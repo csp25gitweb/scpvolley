@@ -4,9 +4,9 @@ require('DAO.class.php');
 
 class postgresDAO extends DAO{
 
-    public static function getInstance($params_bdd){
+    public static function getInstance(){
         if(is_null(self::$instance)) {
-            self::$instance = new postgresDAO($params_bdd);
+            self::$instance = new postgresDAO(unserialize(PARAMS_BDD));
         }
         return self::$instance;
     }

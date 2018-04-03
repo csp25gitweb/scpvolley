@@ -1,10 +1,7 @@
 <?php
 
-require_once('../config.php');
-require_once('../libs/DAO/DAO.postgres.class.php');
-require_once('../libs/smarty/Smarty.class.php');
+require_once('../app/init.php');
 
-require_once('../libs/utils.functions.php');
 
 $retour = null;
 $contenu = null;
@@ -53,7 +50,7 @@ if( isset($_POST['form_post']) ){
     $requete = "INSERT INTO adherents(type_adherent, login, mdp, nom, prenom, no_licence, date_naissance, genre, habilitation, arbitre, entraineur)"
             .  " VALUES ('P', :login, :mdp, :nom, :prenom, :no_licence, :date_naissance, :genre, '1', false, false)";
 
-    $bdd = postgresDAO::getInstance($params_bdd);
+    $bdd = postgresDAO::getInstance();
     $retour = $bdd->exec($requete, $monArray);
     
     if($retour === true){

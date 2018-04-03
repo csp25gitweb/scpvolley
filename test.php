@@ -2,6 +2,7 @@
 
 require('app/init.php');
 
+
 $s_controller = 'homepage';
 if(isset($_GET['controller'])) {
 	$s_controller = $_GET['controller'];
@@ -15,7 +16,9 @@ switch($s_controller) {
 		$controller = new homepageController();
 	break;
 
-	case 'archives':
+	case 'admin':
+            require_once('src/controller/adminController.class.php');
+		$controller = new adminController();
 	break;
 
 	case 'agenda':
