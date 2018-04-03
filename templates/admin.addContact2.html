@@ -1,0 +1,68 @@
+{include 'admin.header.html'}
+
+<h1>Ajouter un Contact</h1>
+<br/>
+
+<form method="POST" action="ajoutContact.php">
+    
+    <label name='contact_adherent'>
+        <p>Adhérent auquel ajouter un contact</p>
+        
+        <select id='contact_id_adherent' name='contact_id_adherent'>
+            {foreach $adherents as $value}
+            <option value="{$value.get_id_adherent()}">{$value.get_nom()}&nbsp;{$value.get_prenom()}&nbsp;(&nbsp;{$value.get_date_naissance()}&nbsp;)</option>
+            {/foreach}
+        </select>
+        
+    </label>
+    
+    <label name='contact_nom'>
+        <p>Nom</p>
+        <input type='text' name='contact_nom' id='contact_nom'>
+    </label>
+
+    <label name='contact_prenom'>
+        <p>Prénom</p>
+        <input type='text' name='contact_prenom' id='contact_prenom'>
+    </label>
+
+    <label name='contact_adresse'>
+        <p>Adresse</p>
+        <input type='text' name='contact_adresse' id='contact_adresse'>
+    </label>
+
+    <label name='contact_cp'>
+        <p>Code&nbsp;postal</p>
+        <input type='text' size='5' maxlength='5' name='contact_cp' id='contact_cp'>
+    </label>
+
+    <label name='contact_ville'>
+        <p>Ville</p>
+        <input type='text' name='contact_ville' id='contact_ville'>
+    </label>
+
+    <br/><br/>
+    <fieldset>
+        <legend>Numéro(s) de téléphone</legend>
+
+        <input type='hidden' id='contact_telNb' name='contact_telNb' value='0'>
+        <input type='button' onclick="contactAjoutChamp('Téléphone', 'tel');return;" value='Ajouter'>
+        <div id='contact_liste_tel'>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Adresse(s) e-mail</legend>
+
+        <input type='hidden' id='contact_emailNb' name='contact_emailNb' value='0'>
+        <input type='button' onclick="contactAjoutChamp('Email', 'email');return;" value='Ajouter'>
+        <div id='contact_liste_email'>
+        </div>
+    </fieldset>
+
+    <br/>
+    <br/>
+    <input type='submit' value='Valider'>
+</form>
+
+{include 'admin.footer.html'}
