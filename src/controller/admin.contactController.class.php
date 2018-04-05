@@ -16,21 +16,9 @@ class adminContactController{
                 $title = "Ajout contact" . SITE_TITLE;
                 
                 $listeAdherents = adherent::findAll();
-                //construction de l'array pour smarty
-                $arrayAdherents= array();
-                
-                foreach($listeAdherents as $key=>$value){
-                    $adherent = array(
-                        'id_adherent'   =>$value->get_id_adherent(),
-                        'nom'           =>$value->get_nom(),
-                        'prenom'        =>$value->get_prenom(),
-                        'date_naissance'=>$value->get_date_naissance()
-                        );
-                    array_push($arrayAdherents, $adherent);
-                }
                 
                 $smarty->assign("title", $title);
-                $smarty->assign('adherents', $arrayAdherents);
+                $smarty->assign('adherents', $listeAdherents);
                 $smarty->Display('admin.addContact.html');
             break;
         
