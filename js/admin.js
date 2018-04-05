@@ -20,6 +20,21 @@ function ajouterAdherent(){
     xhttp.open("POST", "ajoutAdherentTraitement.php", true);
     xhttp.send(formulaire);
  }
+ 
+ function chargerAdherent(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+            document.getElementById('ad_modification').innerHTML = this.responseText;
+            document.getElementById('ad_modification').style.display = 'block';
+            var top = document.getElementById('ad_modification').offsetTop;
+            window.scrollTo(0, top);
+        }
+    };
+    
+    xhttp.open("POST", "index.php?controller=admin&action=adherent&entry=get&id_adherent="+document.getElementById('id_adherent').value, true);
+    xhttp.send();
+ }
 
 
 

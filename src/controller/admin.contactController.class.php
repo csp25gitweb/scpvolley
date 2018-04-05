@@ -19,7 +19,7 @@ class adminContactController{
                 
                 $smarty->assign("title", $title);
                 $smarty->assign('adherents', $listeAdherents);
-                $smarty->Display('admin.addContact.html');
+                $smarty->Display('admin.contact.add.html');
             break;
         
             default:

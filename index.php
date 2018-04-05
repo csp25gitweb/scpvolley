@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require('app/init.php');
 
 getParam('controller', $s_controller);

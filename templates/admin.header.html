@@ -6,3 +6,10 @@
     </head>
     <body>
 
+        {if $admin eq '1'}
+        <div>
+            <a href='index.php?controller=admin&action=adherent&entry=list'>Gestion des adhérents</a>
+            <a href='index.php?controller=admin&action=contact&entry=addPrint'>Gestion des contacts</a>
+            <a href='disconnect.php'>Déconnecter</a>
+        </div>
+        {/if}
