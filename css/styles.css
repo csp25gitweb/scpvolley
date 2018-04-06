@@ -13,6 +13,15 @@ h1, .jumbotron h1 {
 	border: 0;
 }
 
+.bandeauscp {
+	height: 300px; 
+	background-size: cover;
+}
+
+.bandeau_bg_contact {
+	background: url(../images/photo2.jpg) no-repeat center fixed;
+}
+
 /* surcharge hauteur nav pour intégrer le logo */
 /*.navbar-brand {
 	height: 100px;
