@@ -20,6 +20,11 @@ switch($s_controller) {
         new adminController();
     break;
 
+    case 'auth':
+        require_once('src/controller/authController.class.php');
+        new authController();
+    break;
+
     case 'agenda':
     break;
 

@@ -3,8 +3,9 @@
        
 </div>
 
-<form id='ad_form' method="POST" action="ajoutAdherent.php">
+<form id='ad_form' method="POST" action="">
     <input type='hidden' name='form_post' value='1'>
+    <input type='hidden' name='ad_id_adherent' value='{$adherent->get_id_adherent()}'>
     <label name='nom'>
         <p>Nom</p>
         <input type='text' name='ad_nom' id='ad_nom' value='{$adherent->get_nom()}'>
@@ -12,26 +13,26 @@
 
     <label name='prenom'>
         <p>Prénom</p>
-        <input type='text' name='ad_prenom' id='ad_prenom'>
+        <input type='text' name='ad_prenom' id='ad_prenom' value='{$adherent->get_prenom()}'>
     </label>
 
     <label name='naissance'>
         <p>Date de naissance</p>
-        <input type='date' name='ad_naissance' id='ad_naissance'>
+        <input type='date' name='ad_naissance' id='ad_naissance' value='{$adherent->get_date_naissance()}'>
     </label>
     
     <label name='genre'>
         <p>Genre</p>
-        <label><input type='radio' name='ad_genre' id='ad_genre' value='M'>Homme</label>
-        <label><input type='radio' name='ad_genre' id='ad_genre' value='F'>Femme</label>
+        <label><input type='radio' name='ad_genre' id='ad_genre' value='M' {if $adherent->get_genre() eq 'M'}checked{/if}>Homme</label>
+        <label><input type='radio' name='ad_genre' id='ad_genre' value='F' {if $adherent->get_genre() eq 'F'}checked{/if}>Femme</label>
     </label>
     
     <label name='licence'>
         <p>Numéro de licence</p>
-        <input type='text' name='ad_licence' id='ad_licence'>
+        <input type='text' name='ad_licence' id='ad_licence' value='{$adherent->get_no_licence()}'>
     </label>
     
     <br/>
     <br/>
-    <input type='button' onclick='ajouterAdherent();return;' value='Valider'>
+    <input type='button' onclick='processAdherent();return;' value='Valider'>
 </form>

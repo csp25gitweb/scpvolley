@@ -5,15 +5,14 @@
 <label name='contact_adherent'>
     <p>Liste des adhérents</p>
 
-    <select id='id_adherent' name='id_adherent'>
+    <select id='id_adherent' name='id_adherent' onchange='chargerAdherent();'>
+        <option value='-1'>- - - - - - - - - - - - - - - - - - - -</option>
         {foreach $adherents as $value}
         <option value="{$value->get_id_adherent()}">{$value->get_nom()}&nbsp;{$value->get_prenom()}&nbsp;(&nbsp;{$value->get_date_naissance()}&nbsp;)</option>
         {/foreach}
     </select>
 
 </label>
-
-<button onclick='chargerAdherent();'>Modifier</button>
 
 <div id='ad_modification' style='display:none;'>
        

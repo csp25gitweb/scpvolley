@@ -5,12 +5,17 @@ class adherent {
     private $nom;
     private $prenom;
     private $date_naissance;
+    private $genre;
+    private $no_licence;
     
-    const listKnownItems = 'id_adherent, nom, prenom, date_naissance';
+    const listKnownItems = 'id_adherent, nom, prenom, date_naissance, genre, no_licence';
     
     public function __construct($row = null) {
         if( $row != null ){
             $this->buildObject($row);
+        }
+        else{
+            $this->set_id_adherent('-1');
         }
     }
     
@@ -31,7 +36,7 @@ class adherent {
     }
 
     public function set_nom($nom) {
-        $this->nom = $nom;
+        $this->nom = strtoupper($nom);
     }
 
     /******************************************************/
@@ -54,13 +59,71 @@ class adherent {
     
     /******************************************************/
     
+     public function get_genre(){
+        return $this->genre;
+    }
+    public function set_genre($genre){
+        $this->genre = $genre;
+    }
+    
+    /******************************************************/
+    
+    public function get_no_licence(){
+        return $this->no_licence;
+    }
+    public function set_no_licence($no_licence){
+        $this->no_licence = $no_licence;
+    }
+    
+    /******************************************************/
+    
     private function buildObject($row) {
         $this->set_id_adherent($row['id_adherent']);
         $this->set_nom($row['nom']);
         $this->set_prenom($row['prenom']);
         $this->set_date_naissance($row['date_naissance']);
+        $this->set_genre($row['genre']);
+        $this->set_no_licence($row['no_licence']);
     }
 
+    public function save(){
+        $query = null;
+        $monArray = array();
+    
+        $monArray[':login'] = $this->get_nom();
+        $monArray[':mdp'] = '123';
+        $monArray[':nom'] = $this->get_nom();
+        $monArray[':prenom']= $this->get_prenom();
+        $monArray[':date_naissance'] = $this->get_date_naissance();
+        $monArray[':genre'] = $this->get_genre();
+        $monArray[':no_licence'] = $this->get_no_licence();
+        
+        if($this->get_id_adherent() != '-1'){
+            $monArray[':id_adherent'] = $this->get_id_adherent();
+            $query = 'UPDATE adherents SET '
+                    . 'login = :login, '
+                    . 'mdp = :mdp, '
+                    . 'nom = :nom, '
+                    . 'prenom = :prenom, '
+                    . 'date_naissance = :date_naissance, '
+                    . 'genre = :genre, '
+                    . 'no_licence = :no_licence '
+                    . 'WHERE id_adherent = :id_adherent';
+        }
+        else{
+            $query = "INSERT INTO adherents(type_adherent, login, mdp, nom, prenom, no_licence, date_naissance, genre, habilitation, arbitre, entraineur)"
+            .  " VALUES ('P', :login, :mdp, :nom, :prenom, :no_licence, :date_naissance, :genre, '1', false, false)";
+        }
+
+        $bdd = postgresDAO::getInstance();
+        $retour = $bdd->exec($query, $monArray);
+        
+        return $retour;
+    }
+    
+    
+    /******************************************************/
+    
     public static function find($param_id){
 
         $bdd = postgresDAO::getInstance();
@@ -80,7 +143,7 @@ class adherent {
 
     public static function findAll(){
         $bdd = postgresDAO::getInstance();
-        $query = 'SELECT '.adherent::listKnownItems.' FROM adherents';
+        $query = 'SELECT '.adherent::listKnownItems.' FROM adherents ORDER BY nom';
 
         $bdd->exec($query);
         $result = $bdd->fetchAll();
