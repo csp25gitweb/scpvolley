@@ -1,16 +1,45 @@
+//listeners
+(function( $ ) {
 
+    $('#ad_valider').click(function(){
+        recapAjoutAdherent();
+    });
+
+    $('#id_adherent').change(function(){
+        chargerAdherent();
+    });
+    
+    $('#id_contact_adherent').change(function(){
+        listeContacts(); 
+    });
+
+})( jQuery );
+
+
+/********************************************************/
 var compteurTel = 0;
 var compteurEmail = 0;
+
+function appelServeur(nomDiv, post_param){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+            $('#'+nomDiv).html(this.responseText);
+        }
+    };
+
+    $('#'+nomDiv).html("<img src='images/loading_spinner.gif' alt='chargement'>");
+    $('#'+nomDiv).show();
+
+    xhttp.open("POST", post_param, true);
+    xhttp.send();
+}
 
 
 function processAdherent(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if(this.readyState == 4 && this.status == 200) {
-            document.getElementById('ad_recap').innerHTML = this.responseText;
-            document.getElementById('ad_recap').style.display = 'block';
-            var top = document.getElementById('ad_recap').offsetTop;
-            window.scrollTo(0, top);
             document.getElementById('ad_form').reset();
         }
     };
@@ -23,62 +52,66 @@ function processAdherent(){
  
  function chargerAdherent(){
      
-    if(document.getElementById('id_adherent').value == -1){
-        document.getElementById('ad_modification').style.display = 'none';
+    if($('#id_adherent').value == -1){
+        $('#ad_modification').hide();
     }
     else{
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if(this.readyState == 4 && this.status == 200) {
-                document.getElementById('ad_modification').innerHTML = this.responseText;
-                document.getElementById('ad_modification').style.display = 'block';
+                $('#ad_modification').html(this.responseText);
+                $('#ad_valider').click(function(){
+                    recapAjoutAdherent();
+                });
             }
         };
 
-        xhttp.open("POST", "index.php?controller=admin&action=adherent&entry=get&id_adherent="+document.getElementById('id_adherent').value, true);
+        $('#ad_modification').html("<img src='images/loading_spinner.gif' alt='chargement'>");
+        $('#ad_modification').show();
+
+        xhttp.open("POST", "index.php?controller=admin&action=adherent&entry=get&id_adherent="+ $('#id_adherent').val(), true);
         xhttp.send();
     }
- }
+}
 
  function listeContacts(){
      
-    if(document.getElementById('id_adherent').value == -1){
-        document.getElementById('id_listeContacts').style.display = 'none';
+    if($('#id_contact_adherent').val() == -1){
+        $('#id_listeContacts').hide();
     }
     else{
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if(this.readyState == 4 && this.status == 200) {
-                document.getElementById('id_listeContacts').innerHTML = this.responseText;
-                document.getElementById('id_listeContacts').style.display = 'block';
-            }
-        };
-
-        xhttp.open("POST", "index.php?controller=admin&action=contact&entry=getListeContacts&id_adherent="+document.getElementById('id_adherent').value, true);
-        xhttp.send();
+        appelServeur('id_listeContacts', "index.php?controller=admin&action=contact&entry=getListeContacts&id_adherent="+$('#id_contact_adherent').val());
     }
  }
 
 
 function chargerContact(){
     
-    if(document.getElementById('id_contact').value == -1){
-        document.getElementById('div_contact').style.display = 'none';
+    if($('#id_contact').value == -1){
+        $('#div_contact').hide();
     }
     else{
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if(this.readyState == 4 && this.status == 200) {
-                document.getElementById('div_contact').innerHTML = this.responseText;
-                document.getElementById('div_contact').style.display = 'block';
-            }
-        };
-
-        xhttp.open("POST", "index.php?controller=admin&action=contact&entry=getContact&id_contact="+document.getElementById('id_contact').value, true);
-        xhttp.send();
+        appelServeur('div_contact', "index.php?controller=admin&action=contact&entry=getContact&id_contact="+document.getElementById('id_contact').value);
     }
 }
 
+
+function recapAjoutAdherent(){
+    
+    var recap = "<fieldset>";
+    recap += "<legend>Récapitulatif</legend>";
+
+    recap += "<h4>Rappel des informations</h4>";
+    recap += "<br/>Nom : " + $("#ad_nom").val();
+    recap += "<br/>Prénom : " + $("#ad_prenom").val();
+    recap += "<br/>Date de naissance : " + $("#ad_naissance").val();
+    recap += "<br/>Genre : " + $("#ad_genre").val();
+    recap += "<br/>Numéro de licence : " + $("#ad_licence").val();
+    recap += "</fieldset>";
+    
+    
+    $.showModal("Ajouter adhérent", recap, "Modifier", "processAdherent()");
+}
 
 
 function contactAjoutChamp(nom, suffixe){
