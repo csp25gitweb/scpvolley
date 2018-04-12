@@ -1,15 +1,15 @@
 //listeners
 (function( $ ) {
 
-    $('#ad_valider').click(function(){
+    $('#ad_valider').on('click', function(){
         recapAjoutAdherent();
     });
 
-    $('#id_adherent').change(function(){
+    $('#id_adherent').on('change', function(){
         chargerAdherent();
     });
     
-    $('#id_contact_adherent').change(function(){
+    $('#id_contact_adherent').on('change', function(){
         listeContacts(); 
     });
 
