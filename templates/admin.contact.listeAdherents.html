@@ -3,7 +3,7 @@
 <label name='contact_adherent'>
     <p>Adhérent concerné</p>
 
-    <select id='id_contact_adherent' name='id_contact_adherent'>
+    <select id='contact_id_adherent' name='contact_id_adherent'>
         <option value='-1'>- - - - - - - - - - - - - - - - - - - -</option>
         {foreach $adherents as $value}
         <option value="{$value->get_id_adherent()}">{$value->get_nom()}&nbsp;{$value->get_prenom()}&nbsp;(&nbsp;{$value->get_date_naissance()}&nbsp;)</option>

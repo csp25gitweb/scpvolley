@@ -9,50 +9,20 @@
         chargerAdherent();
     });
     
-    $('#id_contact_adherent').on('change', function(){
+    $('#contact_id_adherent').on('change', function(){
         listeContacts(); 
     });
-
+    
 })( jQuery );
 
 
-/********************************************************/
+/******************************************************************/
 var compteurTel = 0;
 var compteurEmail = 0;
 
-function appelServeur(nomDiv, post_param){
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200) {
-            $('#'+nomDiv).html(this.responseText);
-        }
-    };
-
-    $('#'+nomDiv).html("<img src='images/loading_spinner.gif' alt='chargement'>");
-    $('#'+nomDiv).show();
-
-    xhttp.open("POST", post_param, true);
-    xhttp.send();
-}
-
-
-function processAdherent(){
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200) {
-            document.getElementById('ad_form').reset();
-        }
-    };
-    
-    var formulaire = new FormData( document.getElementById('ad_form') );
-    
-    xhttp.open("POST", "index.php?controller=admin&action=adherent&entry=process", true);
-    xhttp.send(formulaire);
- }
- 
  function chargerAdherent(){
      
-    if($('#id_adherent').value == -1){
+    if($('#id_adherent').val() == -1){
         $('#ad_modification').hide();
     }
     else{
@@ -60,7 +30,7 @@ function processAdherent(){
         xhttp.onreadystatechange = function() {
             if(this.readyState == 4 && this.status == 200) {
                 $('#ad_modification').html(this.responseText);
-                $('#ad_valider').click(function(){
+                $('#ad_valider').on('click', function(){
                     recapAjoutAdherent();
                 });
             }
@@ -73,28 +43,6 @@ function processAdherent(){
         xhttp.send();
     }
 }
-
- function listeContacts(){
-     
-    if($('#id_contact_adherent').val() == -1){
-        $('#id_listeContacts').hide();
-    }
-    else{
-        appelServeur('id_listeContacts', "index.php?controller=admin&action=contact&entry=getListeContacts&id_adherent="+$('#id_contact_adherent').val());
-    }
- }
-
-
-function chargerContact(){
-    
-    if($('#id_contact').value == -1){
-        $('#div_contact').hide();
-    }
-    else{
-        appelServeur('div_contact', "index.php?controller=admin&action=contact&entry=getContact&id_contact="+document.getElementById('id_contact').value);
-    }
-}
-
 
 function recapAjoutAdherent(){
     
@@ -112,6 +60,108 @@ function recapAjoutAdherent(){
     
     $.showModal("Ajouter adhérent", recap, "Modifier", "processAdherent()");
 }
+
+function processAdherent(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+            document.getElementById('ad_form').reset();
+        }
+    };
+    
+    var formulaire = new FormData( document.getElementById('ad_form') );
+    
+    xhttp.open("POST", "index.php?controller=admin&action=adherent&entry=process", true);
+    xhttp.send(formulaire);
+ }
+
+
+
+/******************************************************************/
+ function listeContacts(){
+     
+    if($('#contact_id_adherent').val() == -1){
+        $('#id_listeContacts').hide();
+    }
+    else{
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if(this.readyState == 4 && this.status == 200) {
+                $('#id_listeContacts').html(this.responseText);
+                $('#contact_id_contact').on('change', function(){
+                    chargerContact();
+                });
+            }
+        };
+
+        $('#id_listeContacts').html("<img src='images/loading_spinner.gif' alt='chargement'>");
+        $('#id_listeContacts').show();
+
+        xhttp.open("POST", "index.php?controller=admin&action=contact&entry=getListeContacts&id_adherent="+$('#contact_id_adherent').val(), true);
+        xhttp.send();
+     }
+ }
+
+
+function chargerContact(){
+    
+    if($('#contact_id_contact').val() == -1){
+        $('#div_contact').hide();
+    }
+    else{
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if(this.readyState == 4 && this.status == 200) {
+                $('#div_contact').html(this.responseText);
+                
+                $('#contact_ajoutTel').on('click', function(){
+                    contactAjoutChamp('Téléphone', 'tel');
+                });
+
+                $('#contact_ajoutEmail').on('click', function(){
+                    contactAjoutChamp('Email', 'email');
+                });
+                
+                $('#contact_valider').on('click', function(){
+                    recapAjoutContact();
+                });
+            }
+        };
+
+        $('#div_contact').html("<img src='images/loading_spinner.gif' alt='chargement'>");
+        $('#div_contact').show();
+
+        xhttp.open("POST",  "index.php?controller=admin&action=contact&entry=getContact&id_contact="+$('#contact_id_contact').val(), true);
+        xhttp.send();
+    }
+}
+
+
+function recapAjoutContact(){
+    
+    var recap = "<fieldset>";
+    recap += "<legend>Récapitulatif</legend>";
+
+    recap += "<h4>Rappel des informations</h4>";
+    recap += "<br/>Nom : " + $("#contact_nom").val();
+    recap += "<br/>Prénom : " + $("#contact_prenom").val();
+    recap += "<br/>Adresse : " + $("#contact_adresse").val();
+    recap += "<br/>Code postal : " + $("#contact_cp").val();
+    recap += "<br/>Ville : " + $("#contact_ville").val();
+    recap += "</fieldset>";
+    
+    
+    $.showModal("Ajouter contact", recap, "Modifier", "processContact()");
+}
+
+
+function processContact(){
+    alert("Not yet implemented");
+}
+
+
+
+
 
 
 function contactAjoutChamp(nom, suffixe){

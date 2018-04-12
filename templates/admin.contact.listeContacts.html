@@ -2,7 +2,7 @@
 <label name='liste_contact'>
     <p>Contact concerné</p>
 
-    <select id='id_contact' name='id_contact' onchange='chargerContact()'>
+    <select id='contact_id_contact' name='contact_id_contact'>
         <option value='-1'>- - - - - - - - - - - - - - - - - - - -</option>
         {foreach $contact as $value}
         <option value="{$value->get_id_contact()}">{$value->get_nom()}&nbsp;{$value->get_prenom()}</option>

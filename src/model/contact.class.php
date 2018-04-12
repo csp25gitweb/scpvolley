@@ -5,9 +5,12 @@ class contact{
     private $id_contact;
     private $nom;
     private $prenom;
+    private $adresse;
+    private $code_postal;
+    private $ville;
     
     
-    const listKnownItems = 'id_contact, nom, prenom';
+    const listKnownItems = 'id_contact, nom, prenom, adresse, code_postal, ville';
     
     public function __construct($row = null) {
         if( $row != null ){
@@ -49,10 +52,40 @@ class contact{
     
     /******************************************************/
     
+    public function get_adresse() {
+        return $this->adresse;
+    }
+    public function set_adresse($adresse) {
+        $this->adresse = $adresse;
+    }
+    
+    /******************************************************/
+    
+    public function get_code_postal() {
+        return $this->code_postal;
+    }
+    public function set_code_postal($code_postal) {
+        $this->code_postal = $code_postal;
+    }
+    
+    /******************************************************/
+    
+    public function get_ville() {
+        return $this->ville;
+    }
+    public function set_ville($ville) {
+        $this->ville = $ville;
+    }
+    
+    /******************************************************/
+    
     private function buildObject($row) {
         $this->set_id_contact($row['id_contact']);
         $this->set_nom($row['nom']);
         $this->set_prenom($row['prenom']);
+        $this->set_adresse($row['adresse']);
+        $this->set_code_postal($row['code_postal']);
+        $this->set_ville($row['ville']);
     }
     
     
