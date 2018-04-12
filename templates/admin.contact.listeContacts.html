@@ -1,0 +1,17 @@
+
+<label name='liste_contact'>
+    <p>Contact concerné</p>
+
+    <select id='id_contact' name='id_contact' onchange='chargerContact()'>
+        <option value='-1'>- - - - - - - - - - - - - - - - - - - -</option>
+        {foreach $contact as $value}
+        <option value="{$value->get_id_contact()}">{$value->get_nom()}&nbsp;{$value->get_prenom()}</option>
+        {/foreach}
+    </select>
+
+</label>
+
+<div id='div_contact' style='display:none;'>
+    
+</div>
+

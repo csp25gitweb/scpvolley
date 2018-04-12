@@ -1,6 +1,7 @@
 <?php
 
 require_once('src/model/adherent.class.php');
+require_once('src/model/contact.class.php');
 
 class adminContactController{
     
@@ -12,14 +13,22 @@ class adminContactController{
         getParam("entry", $entry);
         
         switch($entry){
-            case "printAdd":
-                $title = "Ajout contact" . SITE_TITLE;
+            case "list":
+                $title = "Gestion contact" . SITE_TITLE;
                 
                 $listeAdherents = adherent::findAll();
                 
                 $smarty->assign("title", $title);
                 $smarty->assign('adherents', $listeAdherents);
-                $smarty->Display('admin.contact.add.html');
+                $smarty->Display('admin.contact.liste.html');
+            break;
+        
+            case 'getListeContacts':
+                $this->getListeContacts($smarty);
+            break;
+        
+            case 'getContact':
+                $this->getContact($smarty);
             break;
         
             default:
@@ -27,6 +36,36 @@ class adminContactController{
             break;
         }
         
+    }
+    
+    private function getListeContacts($smarty){
+        $id_adherent = null;
+        
+        getParam('id_adherent', $id_adherent);
+        
+        $contacts = contact::findAllForAdherent($id_adherent);
+        
+        $smarty->assign("contact", $contacts);
+        $smarty->Display("admin.contact.listeContacts.html");
+
+    }
+    
+    private function getContact($smarty){
+        
+        $id_contact = null;
+        $contact = null;
+        
+        getParam('id_contact', $id_contact);
+        
+        if( !checkEmpty($id_contact) && $id_contact != -1){
+            $contact = contact::find($id_contact);
+        }
+        else{
+            $contact = new contact();
+        }
+        
+        $smarty->assign('contact', $contact);
+        $smarty->Display('admin.contact.form.html');
     }
     
 }

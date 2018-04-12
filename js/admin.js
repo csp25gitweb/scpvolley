@@ -22,22 +22,62 @@ function processAdherent(){
  }
  
  function chargerAdherent(){
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200) {
-            document.getElementById('ad_modification').innerHTML = this.responseText;
-            document.getElementById('ad_modification').style.display = 'block';
-        }
-    };
-    
+     
     if(document.getElementById('id_adherent').value == -1){
         document.getElementById('ad_modification').style.display = 'none';
     }
     else{
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if(this.readyState == 4 && this.status == 200) {
+                document.getElementById('ad_modification').innerHTML = this.responseText;
+                document.getElementById('ad_modification').style.display = 'block';
+            }
+        };
+
         xhttp.open("POST", "index.php?controller=admin&action=adherent&entry=get&id_adherent="+document.getElementById('id_adherent').value, true);
         xhttp.send();
     }
  }
+
+ function listeContacts(){
+     
+    if(document.getElementById('id_adherent').value == -1){
+        document.getElementById('id_listeContacts').style.display = 'none';
+    }
+    else{
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if(this.readyState == 4 && this.status == 200) {
+                document.getElementById('id_listeContacts').innerHTML = this.responseText;
+                document.getElementById('id_listeContacts').style.display = 'block';
+            }
+        };
+
+        xhttp.open("POST", "index.php?controller=admin&action=contact&entry=getListeContacts&id_adherent="+document.getElementById('id_adherent').value, true);
+        xhttp.send();
+    }
+ }
+
+
+function chargerContact(){
+    
+    if(document.getElementById('id_contact').value == -1){
+        document.getElementById('div_contact').style.display = 'none';
+    }
+    else{
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if(this.readyState == 4 && this.status == 200) {
+                document.getElementById('div_contact').innerHTML = this.responseText;
+                document.getElementById('div_contact').style.display = 'block';
+            }
+        };
+
+        xhttp.open("POST", "index.php?controller=admin&action=contact&entry=getContact&id_contact="+document.getElementById('id_contact').value, true);
+        xhttp.send();
+    }
+}
 
 
 

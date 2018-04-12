@@ -1,0 +1,17 @@
+
+
+<label name='contact_adherent'>
+    <p>Adhérent concerné</p>
+
+    <select id='id_adherent' name='id_adherent' onchange='listeContacts()'>
+        <option value='-1'>- - - - - - - - - - - - - - - - - - - -</option>
+        {foreach $adherents as $value}
+        <option value="{$value->get_id_adherent()}">{$value->get_nom()}&nbsp;{$value->get_prenom()}&nbsp;(&nbsp;{$value->get_date_naissance()}&nbsp;)</option>
+        {/foreach}
+    </select>
+
+</label>
+
+<div id='id_listeContacts' style='display:none;'>
+    
+</div>
