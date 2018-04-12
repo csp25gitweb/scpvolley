@@ -26,10 +26,4 @@
             $('#scp_modal').modal({backdrop: 'static', keyboard: false}); 
     }
 
-    function testCallback() {
-            console.log('test callback');
-    }
-
-    showModal('test', '<p><strong>test</strong> contenu</p>', 'titre bouton close', 'testCallback', 'override titre valider');
-
 })( jQuery );
