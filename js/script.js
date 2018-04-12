@@ -1,5 +1,4 @@
 (function( $ ) {
-    //Fonction modale
     function showModal(title, content, title_close_button, callback_valid = '', title_valid_button = 'Valider') {
             $('#scp_modal_title').html(title);
             $('#scp_modal_content').html(content);
