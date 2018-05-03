@@ -24,8 +24,15 @@
 
         $('#scp_modal').modal({backdrop: 'static', keyboard: false}); 
     }
+	
+	$.hideModal = function() {
+		$('#scp_modal_valid_button')
+			.addClass('hidden')
+			.removeProp('disabled')
+		;
+		$('#scp_modal_close_button').removeProp('disabled');
+		$('#scp_modal_close_button_small').show();
+		$('#scp_modal').modal('hide');
+	}
 
 })( jQuery );
-
-
-
