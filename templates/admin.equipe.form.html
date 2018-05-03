@@ -1,0 +1,14 @@
+
+
+<form id='eq_form' method="POST" action="">
+    <input type='hidden' name='form_post' value='1'>
+    <input type='hidden' name='eq_id_equipe' value='{$equipe->get_id_equipe()}'>
+    <label name='nom'>
+        <p>Nom</p>
+        <input type='text' name='eq_nom' id='eq_nom' value='{$equipe->get_nom()}'>
+    </label>
+
+    <br/>
+    <br/>
+    <input type='button' id='eq_valider' value='Valider'>
+</form>

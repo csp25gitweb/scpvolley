@@ -31,6 +31,11 @@ class adminController extends AbstractController {
                 new adminContactController($this->smarty);
             break;
         
+            case "equipe":
+                require_once('src/controller/admin.equipeController.class.php');
+                new adminEquipeController($this->smarty);
+            break;
+        
             case "partenaires":
                 require_once('src/controller/admin.partenairesControlleur.class.php');
                 new adminPartenairesControlleur($this->smarty);
