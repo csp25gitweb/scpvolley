@@ -1,29 +1,29 @@
 <?php
 
-class courriels {
-    private $id_courriel;
+class telephones {
+    private $id_telephone;
     private $id_contact;
-    private $courriel;
+    private $telephone;
     
-    const listKnownItems = 'id_courriel, id_contact, courriel';
+    const listKnownItems = 'id_telephone, id_contact, telephone';
     
     public function __construct($row = null) {
         if( $row != null ){
             $this->buildObject($row);
         }
         else{
-            $this->set_id_courriel('-1');
+            $this->set_id_telephone('-1');
         }
     }
     
     /***************************************************************/
     
-    public function get_id_courriel(){
-        return $this->id_courriel;
+    public function get_id_telephone(){
+        return $this->id_telephone;
     }
     
-    public function set_id_courriel($id_courriel){
-        $this->id_courriel = $id_courriel;
+    public function set_id_telephone($id_telephone){
+        $this->id_telephone = $id_telephone;
     }
     
     /***************************************************************/
@@ -38,20 +38,20 @@ class courriels {
     
     /***************************************************************/
     
-    public function get_courriel(){
-        return $this->courriel;
+    public function get_telephone(){
+        return $this->telephone;
     }
     
-    public function set_courriel($courriel){
-        $this->courriel = $courriel;
+    public function set_telephone($telephone){
+        $this->telephone = $telephone;
     }
 
     /******************************************************/
     
     private function buildObject($row) {
-        $this->set_id_courriel($row['id_courriel']);
+        $this->set_id_telephone($row['id_telephone']);
         $this->set_id_contact($row['id_contact']);
-        $this->set_courriel($row['courriel']);
+        $this->set_telephone($row['telephone']);
     }
     
     
@@ -60,19 +60,19 @@ class courriels {
         $monArray = array();
     
         $monArray[':id_contact'] = $this->get_id_contact();
-        $monArray[':courriel'] = $this->get_courriel();
+        $monArray[':telephone'] = $this->get_telephone();
         
-        if($this->get_id_courriel() != '-1'){
-            $monArray[':id_courriel'] = $this->get_id_courriel();
-            $query = 'UPDATE courriels SET '
+        if($this->get_id_telephone() != '-1'){
+            $monArray[':id_telephone'] = $this->get_id_telephone();
+            $query = 'UPDATE telephones SET '
                     . 'id_contact = :id_contact, '
-                    . 'courriel = :courriel '
-                    . 'WHERE id_courriel = :id_courriel';
+                    . 'telephone = :telephone '
+                    . 'WHERE id_telephone = :id_telephone';
         }
         else{
             
-            $query = "INSERT INTO courriels (id_contact, courriel, ordre) ";
-            $query .= "SELECT :id_contact, :courriel, COALESCE(MAX(ordre)+1, '1') FROM courriels WHERE id_contact = :id_contact";
+            $query = "INSERT INTO telephones (id_contact, telephone, ordre) ";
+            $query .= "SELECT :id_contact, :telephone, COALESCE(MAX(ordre)+1, '1') FROM telephones WHERE id_contact = :id_contact";
         }
 
         $bdd = postgresDAO::getInstance();
@@ -87,15 +87,15 @@ class courriels {
 
         $bdd = postgresDAO::getInstance();
         $params = array(
-            ':id_courriel' => $param_id
+            ':id_telephone' => $param_id
         );
-        $query = 'SELECT '.courriels::listKnownItems.' FROM courriels WHERE id_courriel = :id_courriel';
+        $query = 'SELECT '.telephones::listKnownItems.' FROM telephones WHERE id_telephone = :id_telephone';
 
         $bdd->exec($query, $params);
         $result = $bdd->fetchAll();
 
         if(count($result) == 1){
-            return new courriels($result[0]);
+            return new telephones($result[0]);
         }
         return null;
     }
@@ -104,7 +104,7 @@ class courriels {
     public static function findAllForContact($param_id){
         $bdd = postgresDAO::getInstance();
 
-        $query = 'SELECT '.  courriels::listKnownItems.' FROM courriels WHERE id_contact = :id_contact ORDER BY ordre';
+        $query = 'SELECT '.  telephones::listKnownItems.' FROM telephones WHERE id_contact = :id_contact ORDER BY ordre';
         $params = array(
             ':id_contact' => $param_id
         );
@@ -112,13 +112,13 @@ class courriels {
         $bdd->exec($query, $params);
         $result = $bdd->fetchAll();
 
-        $arrayCourriels = array();
+        $arrayTelephones = array();
 
         foreach ($result as $key=>$value){
-            array_push($arrayCourriels, new courriels($value));
+            array_push($arrayTelephones, new telephones($value));
         }
         
-        return $arrayCourriels;
+        return $arrayTelephones;
     }
     
 }

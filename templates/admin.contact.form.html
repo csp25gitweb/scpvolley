@@ -31,18 +31,42 @@
     <fieldset>
         <legend>Numéro(s) de téléphone</legend>
 
-        <input type='hidden' id='contact_telNb' name='contact_telNb' value='0'>
+        <input type='hidden' id='contact_telNb' name='contact_telNb' value='{$telNb}'>
         <input type='button' id='contact_ajoutTel' value='Ajouter'>
         <div id='contact_liste_tel'>
+        {assign var=compteur value=0}
+        {foreach $telephones as $value}
+            <div id="contact_div_tel_{$compteur}">
+                <label name="contact_tel_{$compteur}">
+                    <p>Téléphone</p>
+                    <input name="contact_id_telephone_{$compteur}" id="contact_id_telephone_{$compteur}" value="{$value->get_id_telephone()}" type="hidden">
+                    <input name="contact_tel_{$compteur}" id="contact_tel_{$compteur}" value="{$value->get_telephone()}" type="text">
+                    <input value="Supprimer" onclick="contactSupprDiv(&quot;contact_div_tel_{$compteur}&quot;);return;" type="button">
+                </label>
+            </div>
+        {assign var=compteur value=$compteur+1}
+        {/foreach}
         </div>
     </fieldset>
 
     <fieldset>
         <legend>Adresse(s) e-mail</legend>
 
-        <input type='hidden' id='contact_emailNb' name='contact_emailNb' value='0'>
+        <input type='hidden' id='contact_emailNb' name='contact_emailNb' value='{$courrielsNb}'>
         <input type='button' id='contact_ajoutEmail' value='Ajouter'>
         <div id='contact_liste_email'>
+        {assign var=compteur value=0}
+        {foreach $courriels as $value}
+            <div id="contact_div_email_{$compteur}">
+                <label name="contact_email_{$compteur}">
+                    <p>Email</p>
+                    <input name="contact_id_courriel_{$compteur}" id="contact_id_courriel_{$compteur}" value="{$value->get_id_courriel()}" type="hidden">
+                    <input name="contact_email_{$compteur}" id="contact_email_{$compteur}" value="{$value->get_courriel()}" type="text">
+                    <input value="Supprimer" onclick="contactSupprDiv(&quot;contact_div_email_{$compteur}&quot;);return;" type="button">
+                </label>
+            </div>
+        {assign var=compteur value=$compteur+1}
+        {/foreach}
         </div>
     </fieldset>
 

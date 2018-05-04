@@ -163,8 +163,11 @@ function processContact(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if(this.readyState == 4 && this.status == 200) {
-            //window.location.reload();
-            alert(this.responseText);
+            console.log(this.responseText);
+            if(this.responseText.indexOf("isok") != -1){
+                $.hideModal();
+                $.showNotify('success', 'Contact ajouté/modifié avec succès.');
+            }
         }
     };
     
@@ -177,15 +180,8 @@ function processContact(){
 
 
 function contactAjoutChamp(nom, suffixe){
-    var compteur = 1;
-    if(suffixe == 'tel'){
-        compteur = compteurTel++;
-    }
-    else if(suffixe == 'email'){
-        compteur = compteurEmail++;
-    }
     
-    document.getElementById('contact_'+suffixe+'Nb').value = compteur+1;
+    compteur = document.getElementById('contact_'+suffixe+'Nb').value
     
     var label = document.createElement('label');
     label.setAttribute('name', 'contact_'+suffixe+'_'+compteur);
@@ -211,10 +207,26 @@ function contactAjoutChamp(nom, suffixe){
     newdiv.setAttribute('id', 'contact_div_'+suffixe+'_'+compteur);
     newdiv.appendChild(label);
     parent.appendChild(newdiv);
+    
+    compteur++;
+    document.getElementById('contact_'+suffixe+'Nb').value = compteur;
 }
 
 function contactSupprDiv(div){
     var child = document.getElementById(div);
+    
+    if(child.children[0].children[1].type == 'hidden'){
+        var xhttp = new XMLHttpRequest();
+        if(child.children[0].children[1].name.indexOf("courriel") != -1 ){
+            xhttp.open("POST", "index.php?controller=admin&action=contact&entry=delEma&delid="+child.children[0].children[1].value, true);
+        }
+        else{
+            xhttp.open("POST", "index.php?controller=admin&action=contact&entry=delTel&delid="+child.children[0].children[1].value, true); 
+        }
+    
+        xhttp.send();
+    }
+    
     child.parentNode.removeChild(child);
 }
 
