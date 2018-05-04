@@ -13,6 +13,10 @@
         listeContacts(); 
     });
     
+    $('#id_equipe').on('change', function(){
+        chargerEquipe();
+    });
+    
 })( jQuery );
 
 
@@ -58,14 +62,14 @@ function recapAjoutAdherent(){
     recap += "</fieldset>";
     
     
-    $.showModal("Ajouter adhérent", recap, "Modifier", "processAdherent()");
+    $.showModal("Ajouter adhérent", recap, "Modifier", "processAdherent");
 }
 
 function processAdherent(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if(this.readyState == 4 && this.status == 200) {
-            document.getElementById('ad_form').reset();
+            window.location.reload();
         }
     };
     
@@ -151,16 +155,24 @@ function recapAjoutContact(){
     recap += "</fieldset>";
     
     
-    $.showModal("Ajouter contact", recap, "Modifier", "processContact()");
+    $.showModal("Ajouter contact", recap, "Modifier", "processContact");
 }
 
 
 function processContact(){
-    alert("Not yet implemented");
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+            //window.location.reload();
+            alert(this.responseText);
+        }
+    };
+    
+    var formulaire = new FormData( document.getElementById('contact_form') );
+    
+    xhttp.open("POST", "index.php?controller=admin&action=contact&entry=process", true);
+    xhttp.send(formulaire);
 }
-
-
-
 
 
 
@@ -204,4 +216,30 @@ function contactAjoutChamp(nom, suffixe){
 function contactSupprDiv(div){
     var child = document.getElementById(div);
     child.parentNode.removeChild(child);
+}
+
+
+/******************************************************************/
+function chargerEquipe(){
+     
+    if($('#id_equipe').val() == -1){
+        $('#div_listeEquipe').hide();
+    }
+    else{
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if(this.readyState == 4 && this.status == 200) {
+                $('#div_listeEquipe').html(this.responseText);
+                $('#eq_valider').on('click', function(){
+                    //TODO
+                });
+            }
+        };
+
+        $('#div_listeEquipe').html("<img src='images/loading_spinner.gif' alt='chargement'>");
+        $('#div_listeEquipe').show();
+
+        xhttp.open("POST", "index.php?controller=admin&action=equipe&entry=get&id_equipe="+ $('#id_equipe').val(), true);
+        xhttp.send();
+    }
 }

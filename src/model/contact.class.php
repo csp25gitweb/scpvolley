@@ -88,6 +88,37 @@ class contact{
         $this->set_ville($row['ville']);
     }
     
+    public function save(){
+        $query = null;
+        $monArray = array();
+
+        $monArray[':nom'] = $this->get_nom();
+        $monArray[':prenom'] = $this->get_prenom();
+        $monArray[':adresse'] = $this->get_adresse();
+        $monArray[':code_postal'] = $this->get_code_postal();
+        $monArray[':ville'] = $this->get_ville();
+        
+        if($this->get_id_contact() != '-1'){
+            $monArray[':id_contact'] = $this->get_id_contact();
+            $query = 'UPDATE contacts SET '
+                    . 'nom = :nom, '
+                    . 'prenom = :prenom, '
+                    . 'adresse = :adresse, '
+                    . 'code_postal = :code_postal, '
+                    . 'ville = :ville '
+                    . 'WHERE id_contact = :id_contact';
+        }
+        else{
+            $query = "INSERT INTO contacts(nom, prenom, adresse, code_postal, ville)"
+            .  " VALUES (:nom, :prenom, :adresse, :code_postal, :ville)";
+        }
+
+        $bdd = postgresDAO::getInstance();
+        $retour = $bdd->exec($query, $monArray);
+        
+        return $retour;
+    }
+    
     
     /******************************************************/
     

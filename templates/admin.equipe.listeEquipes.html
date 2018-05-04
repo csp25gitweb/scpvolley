@@ -1,0 +1,17 @@
+
+
+<label name='equipe'>
+    <p>Équipe concernée</p>
+
+    <select id='id_equipe' name='id_equipe'>
+        <option value='-1'>- - - - - - - - - - - - - - - - - - - -</option>
+        {foreach $equipes as $value}
+        <option value="{$value->get_id_equipe()}">{$value->get_nom()}</option>
+        {/foreach}
+    </select>
+
+</label>
+
+<div id='div_listeEquipe' style='display:none;'>
+    
+</div>

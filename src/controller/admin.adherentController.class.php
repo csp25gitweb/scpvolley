@@ -86,9 +86,9 @@ class adminAdherentController{
             $adherent->set_no_licence($ad_licence);
             
             $adherent->save();
-                $smarty->assign('adherent', $adherent);
-                $smarty->Display('admin.adherent.recap.html');
-
+            
+            $_SESSION["notify_message"] = "Adhérent ajouté avec succès !";
+            $_SESSION["notify_type"] = "success";
         }
     }
     
