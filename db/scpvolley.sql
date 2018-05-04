@@ -231,16 +231,32 @@ CREATE TABLE contacts (
 
 ALTER TABLE contacts OWNER TO scp4;
 
+
+--
+-- Name: sq_id_courriel; Type: SEQUENCE; Schema: public; Owner: scp4
+--
+
+DROP SEQUENCE IF EXISTS sq_id_courriel CASCADE;
+CREATE SEQUENCE sq_id_courriel
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE sq_id_courriel OWNER TO scp4;
+
 --
 -- Name: courriels; Type: TABLE; Schema: public; Owner: scp4
 --
 
 DROP TABLE IF EXISTS courriels CASCADE;
 CREATE TABLE courriels (
+    id_courriel integer DEFAULT nextval('sq_id_courriel'::regclass) NOT NULL,
     id_contact integer NOT NULL,
     courriel character varying(256) NOT NULL,
-    ordre integer,
-    CONSTRAINT ck_courriel CHECK (((courriel)::text ~ '^(([a-zA-Z0-9_+-]+\.)+[a-zA-Z0-9_+-]+|[a-zA-Z0-9]+)?[a-zA-Z0-9_+-]@([a-zA-Z0-9_+-]+\.)+[a-zA-Z0-9_+-]{2,6}$'::text))
+    ordre integer
 );
 
 
@@ -531,18 +547,34 @@ CREATE TABLE salles (
 
 ALTER TABLE salles OWNER TO scp4;
 
+
+--
+-- Name: sq_id_telephone; Type: SEQUENCE; Schema: public; Owner: scp4
+--
+
+DROP SEQUENCE IF EXISTS sq_id_telephone CASCADE;
+CREATE SEQUENCE sq_id_telephone
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE sq_id_telephone OWNER TO scp4;
+
 --
 -- Name: telephones; Type: TABLE; Schema: public; Owner: scp4
 --
 
 DROP TABLE IF EXISTS telephones CASCADE;
 CREATE TABLE telephones (
+    id_telephone integer DEFAULT nextval('sq_id_telephone'::regclass) NOT NULL,
     id_contact integer NOT NULL,
     telephone character(10) NOT NULL,
     type character varying(50),
     remarque character varying(200),
     ordre integer,
-    CONSTRAINT ck_telephone CHECK ((telephone ~ '^0[0-9]{9}$'::text)),
     CONSTRAINT ck_type CHECK (((type)::text = ANY (ARRAY[('fixe'::character varying)::text, ('portable'::character varying)::text, ('travail'::character varying)::text, ('autre'::character varying)::text])))
 );
 
