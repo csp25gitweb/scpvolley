@@ -50,6 +50,10 @@ class adminContactController{
                 postgresDAO::getInstance()->exec($query);
             break;
         
+            case "delete":
+                $this->deleteContact();
+            break;
+        
             default:
                 echo "404";
             break;
@@ -104,6 +108,7 @@ class adminContactController{
     
     private function processContact($smarty){
         $contact_id_contact = null;
+        $contact_id_id_adherent = null;
         $contact_nom = null;
         $contact_prenom = null;
         $contact_adresse = null;
@@ -116,6 +121,7 @@ class adminContactController{
         //Si le formulaire a été posté
         if( isset($_POST['form_post']) ){
             getParam('contact_id_contact', $contact_id_contact);
+            getParam('contact_id_id_adherent', $contact_id_id_adherent);
             getParam('contact_nom'       , $contact_nom);
             getParam('contact_prenom'    , $contact_prenom);
             getParam('contact_adresse'   , $contact_adresse);
@@ -129,13 +135,14 @@ class adminContactController{
             
             $contact = new contact();
             $contact->set_id_contact($contact_id_contact);
+            $contact->set_id_adherent($contact_id_id_adherent);
             $contact->set_nom($contact_nom);
             $contact->set_prenom($contact_prenom);
             $contact->set_adresse($contact_adresse);
             $contact->set_code_postal($contact_cp);
             $contact->set_ville($contact_ville);
             
-            $contact->save();
+            $contact_id_contact = $contact->save();
             
             
             //TODO a modifier apres MAJ de la BDD
@@ -165,6 +172,25 @@ class adminContactController{
             
             echo "isok";
         }
+    }
+    
+    
+    function deleteContact(){
+        
+        $id_contact = null;
+        
+        getParam('id_contact', $id_contact);
+        
+        $query = "DELETE FROM telephones WHERE id_contact = '".$id_contact."'";
+        postgresDAO::getInstance()->exec($query);
+
+        $query = "DELETE FROM courriels WHERE id_contact = '".$id_contact."'";
+        postgresDAO::getInstance()->exec($query);
+        
+        $query = "DELETE FROM contacts WHERE id_contact = '".$id_contact."'";
+        postgresDAO::getInstance()->exec($query);
+        
+        echo "isok";
     }
     
 }

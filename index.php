@@ -1,6 +1,10 @@
 <?php
 
 session_start();
+if(isset($_GET['controller']) && $_GET['controller'] == 'disconnect'){
+    session_destroy();
+    header('Location: index.php');
+}
 
 require('app/init.php');
 

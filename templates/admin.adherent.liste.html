@@ -1,9 +1,8 @@
 
 {include 'admin.header.html'}
-{include 'admin.adherent.menu.html'}
 
 <label name='contact_adherent'>
-    <p>Liste des adhérents</p>
+    <p>Gestion des adhérents - Liste des adhérents</p>
 
     <select id='id_adherent' name='id_adherent' >
         <option value='-1'>- - - - - - - - - - - - - - - - - - - -</option>
@@ -11,6 +10,9 @@
         <option value="{$value->get_id_adherent()}">{$value->get_nom()}&nbsp;{$value->get_prenom()}&nbsp;(&nbsp;{$value->get_date_naissance()}&nbsp;)</option>
         {/foreach}
     </select>
+    ou
+    <input id='ad_id_nouveau' name='ad_id_nouveau' type="button" value="Nouvel adhérent">
+
 
 </label>
 
