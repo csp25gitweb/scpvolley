@@ -10,27 +10,41 @@ class adminPartenairesControlleur {
         getParam("entry", $entry);
         
         switch ($entry) {
-            case 'printAdd':
-                // TODO: site_title
-                $title = "Ajout partenaire" . "scpvolley";
+            case 'printList':
+                $title = "Liste des partenaires" . SITE_TITLE;
                 $smarty->assign("title", $title);
-                $smarty->Display('admin.addPartenaire.html');
+                $listePartenaires = partenaires::findAll();
+                $smarty->assign('listePartenaires', $listePartenaires);
+                $smarty->Display('admin.partenaire.list.html');
+                break;
+            case 'printAdd':
+                $title = "Ajout partenaire" . SITE_TITLE;
+                $smarty->assign("title", $title);
+                $smarty->Display('admin.partenaire.add.html');
                 break;
             case 'add':
-                $newPartenaire = new partenaires(
-                        $_POST['titre'], 
-                        $_POST['description'], 
-                        $_POST['lien_logo'], 
-                        $_POST['position']
-                    );
-                $newPartenaire->add();
+                verifierPartenaire($_POST['titre'], 
+                                   $_POST['description'], 
+                                   $_POST['lien_logo'],
+                                   $_POST['position']);
                 break;
             default:
-                // 404
-                echo '404 partenaires';
+                $title = "Gestion des partenaires" . SITE_TITLE;
+                $smarty->assign("title", $title);
+                $smarty->Display('admin.partenaire.html');
                 break;
         }
     }
+}
+
+function verifierPartenaire($titre, $description, $lien_logo, $position) {
+    $arrayPartenaire = array();
+    $arrayPartenaire['titre'] = $_POST['titre'];
+    $arrayPartenaire['description'] = $_POST['description'];
+    $arrayPartenaire['lien_logo'] = $_POST['lien_logo'];
+    $arrayPartenaire['position'] = $_POST['position'];
+    $monPartenaire = new partenaires($arrayPartenaire);
+    $monPartenaire->save();
 }
 
 ?>

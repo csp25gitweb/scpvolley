@@ -1,25 +1,25 @@
 {include 'admin.header.html'}
 
-    <h1>Ajouter un partenaire</h1>
+    <h1>{$title}</h1>
     <form method="POST" action="?controller=admin&action=partenaires&entry=add" >
         <label name='partenaire_titre'>
             <p>titre/nom du partenaire</p>
-            <input type='text' name='titre' id='partenaire_titre'>
+            <input type='text' name='titre' id='partenaire_titre' required>
         </label>
         
         <label name='partenaire_description'>
             <p>description du partenaire</p>
-            <input type='text' name='description' id='partenaire_description'>
+            <input type='text' name='description' id='partenaire_description' required>
         </label>
         
         <label name='partenaire_logo'>
-            <p>logo du partenaire</p>
-            <input type='url' name='lien_logo' id='partenaire_logo'>
+            <p>logo du partenaire (adresse web)</p>
+            <input type='url' name='lien_logo' id='partenaire_logo' required>
         </label>
         
         <label name='partenaire_position'>
-            <p>position dans la page par rapport aux autres paertnaires</p>
-            <input type='text' name='position' id='partenaire_position'>
+            <p>position dans la page par rapport aux autres partnaires</p>
+            <input type='text' name='position' id='partenaire_position' required pattern="[0-9]+">
         </label>
         
         <br/>

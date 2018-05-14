@@ -1,0 +1,8 @@
+{include 'admin.header.html'}
+
+<h1>{$title}</h1>
+{foreach from=$listePartenaires key=k item=i}
+    {$i->get_position()} {$i->get_titre()} {$i->get_description()} {$i->get_lien_logo()} <br>
+{/foreach}
+
+{include 'admin.footer.html'}
