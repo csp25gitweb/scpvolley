@@ -1,3 +1,88 @@
+/* classes de margin et padding */
+.padding-xs { padding: .25em; }
+.padding-sm { padding: .5em; }
+.padding-md { padding: 1em; }
+.padding-lg { padding: 1.5em; }
+.padding-xl { padding: 3em; }
+
+.padding-x-xs { padding: .25em 0; }
+.padding-x-sm { padding: .5em 0; }
+.padding-x-md { padding: 1em 0; }
+.padding-x-lg { padding: 1.5em 0; }
+.padding-x-xl { padding: 3em 0; }
+
+.padding-y-xs { padding: 0 .25em; }
+.padding-y-sm { padding: 0 .5em; }
+.padding-y-md { padding: 0 1em; }
+.padding-y-lg { padding: 0 1.5em; }
+.padding-y-xl { padding: 0 3em; }
+
+.padding-top-xs { padding-top: .25em; }
+.padding-top-sm { padding-top: .5em; }
+.padding-top-md { padding-top: 1em; }
+.padding-top-lg { padding-top: 1.5em; }
+.padding-top-xl { padding-top: 3em; }
+
+.padding-right-xs { padding-right: .25em; }
+.padding-right-sm { padding-right: .5em; }
+.padding-right-md { padding-right: 1em; }
+.padding-right-lg { padding-right: 1.5em; }
+.padding-right-xl { padding-right: 3em; }
+
+.padding-bottom-xs { padding-bottom: .25em; }
+.padding-bottom-sm { padding-bottom: .5em; }
+.padding-bottom-md { padding-bottom: 1em; }
+.padding-bottom-lg { padding-bottom: 1.5em; }
+.padding-bottom-xl { padding-bottom: 3em; }
+
+.padding-left-xs { padding-left: .25em; }
+.padding-left-sm { padding-left: .5em; }
+.padding-left-md { padding-left: 1em; }
+.padding-left-lg { padding-left: 1.5em; }
+.padding-left-xl { padding-left: 3em; }
+
+.margin-xs { margin: .25em; }
+.margin-sm { margin: .5em; }
+.margin-md { margin: 1em; }
+.margin-lg { margin: 1.5em; }
+.margin-xl { margin: 3em; }
+
+.margin-x-xs { margin: .25em 0; }
+.margin-x-sm { margin: .5em 0; }
+.margin-x-md { margin: 1em 0; }
+.margin-x-lg { margin: 1.5em 0; }
+.margin-x-xl { margin: 3em 0; }
+
+.margin-y-xs { margin: 0 .25em; }
+.margin-y-sm { margin: 0 .5em; }
+.margin-y-md { margin: 0 1em; }
+.margin-y-lg { margin: 0 1.5em; }
+.margin-y-xl { margin: 0 3em; }
+
+.margin-top-xs { margin-top: .25em; }
+.margin-top-sm { margin-top: .5em; }
+.margin-top-md { margin-top: 1em; }
+.margin-top-lg { margin-top: 1.5em; }
+.margin-top-xl { margin-top: 3em; }
+
+.margin-right-xs { margin-right: .25em; }
+.margin-right-sm { margin-right: .5em; }
+.margin-right-md { margin-right: 1em; }
+.margin-right-lg { margin-right: 1.5em; }
+.margin-right-xl { margin-right: 3em; }
+
+.margin-bottom-xs { margin-bottom: .25em; }
+.margin-bottom-sm { margin-bottom: .5em; }
+.margin-bottom-md { margin-bottom: 1em; }
+.margin-bottom-lg { margin-bottom: 1.5em; }
+.margin-bottom-xl { margin-bottom: 3em; }
+
+.margin-left-xs { margin-left: .25em; }
+.margin-left-sm { margin-left: .5em; }
+.margin-left-md { margin-left: 1em; }
+.margin-left-lg { margin-left: 1.5em; }
+.margin-left-xl { margin-left: 3em; }
+
 /* ajout padding pour le sticky header */
 body{
 	padding-top:120px;
@@ -13,32 +98,25 @@ h1, .jumbotron h1 {
 	border: 0;
 }
 
-.bandeauscp {
-	height: 300px; 
+/* bandeau illustration rubrique */
+.scp_bandeau {
+	height: 300px;
+	/*background: url(../images/photo2.jpg) no-repeat center center fixed;*/
+	background-attachment: fixed;
+	background-position: center center;
+	background-repeat: no-repeat;
 	background-size: cover;
 }
-
-.bandeau_bg_contact {
-	background: url(../images/photo2.jpg) no-repeat center fixed;
-}
-
-/* surcharge hauteur nav pour intégrer le logo */
-/*.navbar-brand {
-	height: 100px;
-}
-.nav >li >a {
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
-.navbar-toggle {
-  padding: 10px;
-  margin: 25px 15px 25px 0;
-}
-
-@media (max-width: 768px) {
-	.navbar-brand 
+	.scp_bandeau_contact {
+		background-image: url(../images/photo2.jpg);
 	}
-}*/
+
+/* alignement logo version mobile */
+@media only screen and (max-device-width: 768px) {
+    .navbar-left {
+		margin-left: 40%;
+	}
+}
 
 /* footer */
 .footer {
@@ -50,34 +128,29 @@ h1, .jumbotron h1 {
 	border-bottom: 1px solid #CCCCCC;
 	border-top: 1px solid #DDDDDD;
 }
-
-.footer p {
-	margin: 0;
-}
-.footer img {
-	max-width: 100%;
-}
-.footer h3 {
-	border-bottom: 1px solid #BAC1C8;
-	color: #54697E;
-	font-size: 18px;
-	font-weight: 600;
-	line-height: 27px;
-	padding: 40px 0 10px;
-	text-transform: uppercase;
-}
-.footer ul {
-	font-size: 13px;
-	list-style-type: none;
-	margin-left: 0;
-	padding-left: 0;
-	margin-top: 15px;
-	color: #7F8C8D;
-}
-.footer ul li a {
-	padding: 0 0 5px 0;
-	display: block;
-}
+	.footer p {
+		margin: 0;
+	}
+	.footer img {
+		max-width: 100%;
+	}
+	.footer h3 {
+		border-bottom: 1px solid #BAC1C8;
+		font-size: 18px;
+		font-weight: 600;
+		line-height: 27px;
+		text-transform: uppercase;
+	}
+	.footer ul {
+		list-style-type: none;
+		margin-left: 0;
+		padding-left: 0;
+		margin-top: 15px;
+	}
+		.footer ul li a {
+			padding: 0 0 5px 0;
+			display: block;
+		}
 
 .social li {
 	background: none repeat scroll 0 0 #B5B5B5;
@@ -107,18 +180,18 @@ h1, .jumbotron h1 {
 	-ms-transform: scale(1.1) rotate(360deg);
 	-o-transform: scale(1.1) rotate(360deg);
 }
-.social li a {
-	color: #EDEFF1;
-}
-.social li:hover {
-	border: 2px solid #2c3e50;
-	background: #2c3e50;
-}
-.social li a i {
-	font-size: 16px;
-	margin: 0 0 0 5px;
-	color: #EDEFF1 !important;
-}
+	.social li a {
+		color: #EDEFF1;
+	}
+	.social li:hover {
+		border: 2px solid #2c3e50;
+		background: #2c3e50;
+	}
+	.social li a i {
+		font-size: 16px;
+		margin: 0 0 0 5px;
+		color: #EDEFF1 !important;
+	}
 
 /* animations notify */
 .animated {
