@@ -7,12 +7,23 @@ class partenaires {
     private $lien_logo;
     private $position;
     
-    public function __construct($titre, $description, $lien_logo, $position) {
-        $this->titre = $titre;
-        $this->description = $description;
-        $this->lien_logo = $lien_logo;
-        $this->position = $position;
+    public function __construct($row = null) {
+        if( $row != null ){
+            $this->buildObject($row);
+        }
+        else{
+            $this->set_id_partenaire('-1');
+        }
     }
+    
+    public static function newPartenaire($titre, $description, $lien_logo, $position) {
+        $obj = new partenaires();
+        $obj->set_titre($titre);
+        $obj->set_description($description);
+        $obj->set_lien_logo($lien_logo);
+        $obj->set_position($position);
+        return $obj;
+    } 
     
     public function get_id_partenaire() {
         return $this->id_partenaire;
@@ -55,14 +66,16 @@ class partenaires {
     }
     
     private function buildObject($row) {
-        $this->set_id_partenaire($row['id_partenaire']);
+        if ( isset($id_partenaire) ) {
+            $this->set_id_partenaire($row['id_partenaire']);
+        }
         $this->set_titre($row['titre']);
         $this->set_description($row['description']);
         $this->set_lien_logo($row['lien_logo']);
         $this->set_position($row['position']);
     }
     
-    public function add() {
+    public function save() {
         $bdd = postgresDAO::getInstance();
         $params = array(
             ':titre' => $this->titre,
@@ -73,13 +86,22 @@ class partenaires {
         $query = 'INSERT INTO partenaires (titre, description, lien_logo, position)'
                 . 'VALUES (:titre, :description, :lien_logo, :position)';
         $bdd->exec($query, $params);
-        $result = $bdd->fetchAll();
-        if ($result != NULL) {
-            $this->id_partenaire = $result;
-        } else {
-            error_log("partenaires add: request failed");
+    }
+    
+    public static function findAll() {
+        $bdd = postgresDAO::getInstance();
+        $sql = 'SELECT id_partenaire, titre, description, lien_logo, position FROM partenaires ORDER BY position';
+        
+        $bdd->exec($sql);
+        $result = $bdd->fetchAll(PDO::FETCH_ASSOC);
+        
+        $listPartenaires = array();
+        
+        foreach ($result as $pos1 => $row) {
+            array_push($listPartenaires, new partenaires($row));
         }
         
+        return $listPartenaires;
     }
     
 }

@@ -50,6 +50,14 @@ abstract class DAO{
        return $this->stmt->fetchAll();
     }
     
+    public function lastInsertId(){
+        if($this->stmt == null){
+           return -1;
+       }
+       
+       return $this->db->lastInsertId();
+    }
+    
 }
 
 

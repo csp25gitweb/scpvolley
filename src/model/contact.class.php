@@ -3,6 +3,7 @@
 class contact{
     
     private $id_contact;
+    private $id_adherent;
     private $nom;
     private $prenom;
     private $adresse;
@@ -10,7 +11,7 @@ class contact{
     private $ville;
     
     
-    const listKnownItems = 'id_contact, nom, prenom, adresse, code_postal, ville';
+    const listKnownItems = 'id_contact, id_adherent, nom, prenom, adresse, code_postal, ville';
     
     public function __construct($row = null) {
         if( $row != null ){
@@ -29,6 +30,15 @@ class contact{
     }
     public function set_id_contact($id) {
         $this->id_contact = $id;
+    }
+    
+    /******************************************************/
+    
+    public function get_id_adherent() {
+        return $this->id_adherent;
+    }
+    public function set_id_adherent($id) {
+        $this->id_adherent = $id;
     }
 	
     /******************************************************/
@@ -81,6 +91,7 @@ class contact{
     
     private function buildObject($row) {
         $this->set_id_contact($row['id_contact']);
+        $this->set_id_adherent($row['id_adherent']);
         $this->set_nom($row['nom']);
         $this->set_prenom($row['prenom']);
         $this->set_adresse($row['adresse']);
@@ -93,6 +104,7 @@ class contact{
         $monArray = array();
 
         $monArray[':nom'] = $this->get_nom();
+        $monArray['id_adherent'] = $this->get_id_adherent();
         $monArray[':prenom'] = $this->get_prenom();
         $monArray[':adresse'] = $this->get_adresse();
         $monArray[':code_postal'] = $this->get_code_postal();
@@ -101,6 +113,7 @@ class contact{
         if($this->get_id_contact() != '-1'){
             $monArray[':id_contact'] = $this->get_id_contact();
             $query = 'UPDATE contacts SET '
+                    . 'id_adherent = :id_adherent, '
                     . 'nom = :nom, '
                     . 'prenom = :prenom, '
                     . 'adresse = :adresse, '
@@ -109,14 +122,18 @@ class contact{
                     . 'WHERE id_contact = :id_contact';
         }
         else{
-            $query = "INSERT INTO contacts(nom, prenom, adresse, code_postal, ville)"
-            .  " VALUES (:nom, :prenom, :adresse, :code_postal, :ville)";
+            $query = "INSERT INTO contacts(id_adherent, nom, prenom, adresse, code_postal, ville)"
+            .  " VALUES (:id_adherent, :nom, :prenom, :adresse, :code_postal, :ville)";
         }
 
         $bdd = postgresDAO::getInstance();
-        $retour = $bdd->exec($query, $monArray);
+        $bdd->exec($query, $monArray);
         
-        return $retour;
+        if($this->get_id_contact() == '-1'){
+            $this->set_id_contact($bdd->lastInsertId());
+        }
+        
+        return $this->get_id_contact();
     }
     
     

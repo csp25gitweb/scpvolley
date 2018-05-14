@@ -2,6 +2,8 @@
 
 require_once('src/model/adherent.class.php');
 require_once('src/model/contact.class.php');
+require_once('src/model/courriels.class.php');
+require_once('src/model/telephones.class.php');
 
 class adminContactController{
     
@@ -9,6 +11,7 @@ class adminContactController{
 
         $entry = null;
         $title = null;
+        $delid = null;
         
         getParam("entry", $entry);
         
@@ -33,6 +36,22 @@ class adminContactController{
         
             case "process":
                 $this->processContact($smarty);
+            break;
+        
+            case "delTel":
+                getParam("delid", $delid);
+                $query = "DELETE FROM telephones WHERE id_telephone = '".$delid."'";
+                postgresDAO::getInstance()->exec($query);
+            break;
+        
+            case "delEma":
+                getParam("delid", $delid);
+                $query = "DELETE FROM courriels WHERE id_courriel = '".$delid."'";
+                postgresDAO::getInstance()->exec($query);
+            break;
+        
+            case "delete":
+                $this->deleteContact();
             break;
         
             default:
@@ -68,12 +87,28 @@ class adminContactController{
             $contact = new contact();
         }
         
+        //Gestion des numéros de telephone
+        $arrayTelephones = telephones::findAllForContact($contact->get_id_contact());
+        $telNb = count($arrayTelephones);
+        
+        //Gestion des adresses email
+        $arrayCourriels = courriels::findAllForContact($contact->get_id_contact());
+        $courrielsNb = count($arrayCourriels);
+
+        //smarty
+        $smarty->assign('telNb', $telNb);
+        $smarty->assign('telephones', $arrayTelephones);
+        
+        $smarty->assign('courrielsNb', $courrielsNb);
+        $smarty->assign('courriels', $arrayCourriels);
+        
         $smarty->assign('contact', $contact);
         $smarty->Display('admin.contact.form.html');
     }
     
     private function processContact($smarty){
         $contact_id_contact = null;
+        $contact_id_id_adherent = null;
         $contact_nom = null;
         $contact_prenom = null;
         $contact_adresse = null;
@@ -86,6 +121,7 @@ class adminContactController{
         //Si le formulaire a été posté
         if( isset($_POST['form_post']) ){
             getParam('contact_id_contact', $contact_id_contact);
+            getParam('contact_id_id_adherent', $contact_id_id_adherent);
             getParam('contact_nom'       , $contact_nom);
             getParam('contact_prenom'    , $contact_prenom);
             getParam('contact_adresse'   , $contact_adresse);
@@ -99,40 +135,62 @@ class adminContactController{
             
             $contact = new contact();
             $contact->set_id_contact($contact_id_contact);
+            $contact->set_id_adherent($contact_id_id_adherent);
             $contact->set_nom($contact_nom);
             $contact->set_prenom($contact_prenom);
             $contact->set_adresse($contact_adresse);
             $contact->set_code_postal($contact_cp);
             $contact->set_ville($contact_ville);
             
-            $contact->save();
+            $contact_id_contact = $contact->save();
             
             
             //TODO a modifier apres MAJ de la BDD
             for($i = 0 ; $i < $contact_telNb ; $i++){
                 if( isset($_POST['contact_tel_'.$i]) ){
-                    $tel = $_POST['contact_tel_'.$i];
-                    $query = "INSERT INTO telephones (id_contact, telephone) VALUES ('".$contact_id_contact."', '".$tel."')";
-                    echo $query;
-                    $bdd = postgresDAO::getInstance();
-                    $retour = $bdd->exec($query);
+                    $telephone = new telephones();
+                    if( isset($_POST['contact_id_telephone_'.$i]) ){
+                        $telephone->set_id_telephone($_POST['contact_id_telephone_'.$i]);
+                    }
+                    $telephone->set_id_contact($contact_id_contact);
+                    $telephone->set_telephone($_POST['contact_tel_'.$i]);
+                    $telephone->save();
                 }
             }
             
             for($i = 0 ; $i < $contact_emailNb ; $i++){
                 if( isset($_POST['contact_email_'.$i]) ){
-                    $courriel = $_POST['contact_email_'.$i];
-                    $query = "INSERT INTO courriels (id_contact, courriel) VALUES ('".$contact_id_contact."', '".$courriel."')";
-                    
-                    $bdd = postgresDAO::getInstance();
-                    $retour = $bdd->exec($query);
+                    $courriel = new courriels();
+                    if( isset($_POST['contact_id_courriel_'.$i]) ){
+                        $courriel->set_id_courriel($_POST['contact_id_courriel_'.$i]);
+                    }
+                    $courriel->set_id_contact($contact_id_contact);
+                    $courriel->set_courriel($_POST['contact_email_'.$i]);
+                    $courriel->save();
                 }
             }
             
-            
-            $smarty->assign('contact', $contact);
-            $smarty->Display('admin.contact.recap.html');
+            echo "isok";
         }
+    }
+    
+    
+    function deleteContact(){
+        
+        $id_contact = null;
+        
+        getParam('id_contact', $id_contact);
+        
+        $query = "DELETE FROM telephones WHERE id_contact = '".$id_contact."'";
+        postgresDAO::getInstance()->exec($query);
+
+        $query = "DELETE FROM courriels WHERE id_contact = '".$id_contact."'";
+        postgresDAO::getInstance()->exec($query);
+        
+        $query = "DELETE FROM contacts WHERE id_contact = '".$id_contact."'";
+        postgresDAO::getInstance()->exec($query);
+        
+        echo "isok";
     }
     
 }
