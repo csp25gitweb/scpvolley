@@ -1,8 +1,8 @@
 //listeners
 (function( $ ) {
-
-    $('#ad_valider').on('click', function(){
-        recapAjoutAdherent();
+    
+    $('#ad_id_nouveau').on('click', function(){
+        nouvelAdherent();
     });
 
     $('#id_adherent').on('change', function(){
@@ -37,6 +37,10 @@ var compteurEmail = 0;
                 $('#ad_valider').on('click', function(){
                     recapAjoutAdherent();
                 });
+                
+                $('#ad_delete').on('click', function(){
+                    deleteAdherent();
+                });
             }
         };
 
@@ -46,6 +50,27 @@ var compteurEmail = 0;
         xhttp.open("POST", "index.php?controller=admin&action=adherent&entry=get&id_adherent="+ $('#id_adherent').val(), true);
         xhttp.send();
     }
+}
+
+function nouvelAdherent(){
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+            $('#ad_modification').html(this.responseText);
+            $('#ad_valider').on('click', function(){
+                recapAjoutAdherent();
+            });
+            
+            $('#id_adherent').val('-1');
+        }
+    };
+
+    $('#ad_modification').html("<img src='images/loading_spinner.gif' alt='chargement'>");
+    $('#ad_modification').show();
+
+    xhttp.open("POST", "index.php?controller=admin&action=adherent&entry=get&id_adherent=-1", true);
+    xhttp.send();
 }
 
 function recapAjoutAdherent(){
@@ -65,11 +90,34 @@ function recapAjoutAdherent(){
     $.showModal("Ajouter adhérent", recap, "Modifier", "processAdherent");
 }
 
+
+function deleteAdherent(){
+    
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+            if(this.responseText.indexOf("isok") != -1){
+                $.hideModal();
+                $.showNotify('success', 'Adhérent supprimé avec succès.');
+                
+                setTimeout(location.reload.bind(location), 2000);
+            }
+        }
+    };
+    
+    xhttp.open("POST", "index.php?controller=admin&action=adherent&entry=delete&id_adherent="+$('#ad_id_adherent').val(), true);
+    xhttp.send();
+}
+
 function processAdherent(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if(this.readyState == 4 && this.status == 200) {
-            window.location.reload();
+
+            $.hideModal();
+            $.showNotify('success', 'Adhérent ajouté/modifié avec succès.');
+            
+            setTimeout(location.reload.bind(location), 2000);
         }
     };
     
@@ -95,6 +143,9 @@ function processAdherent(){
                 $('#contact_id_contact').on('change', function(){
                     chargerContact();
                 });
+                $('#contact_id_nouveau').on('click', function(){
+                    nouveauContact();
+                });
             }
         };
 
@@ -103,10 +154,42 @@ function processAdherent(){
 
         xhttp.open("POST", "index.php?controller=admin&action=contact&entry=getListeContacts&id_adherent="+$('#contact_id_adherent').val(), true);
         xhttp.send();
-     }
- }
+    }
+}
 
 
+ function nouveauContact(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+            $('#div_contact').html(this.responseText);
+            
+            $('#contact_id_id_adherent').val($('#contact_id_adherent').val());
+
+            $('#contact_ajoutTel').on('click', function(){
+                contactAjoutChamp('Téléphone', 'tel');
+            });
+
+            $('#contact_ajoutEmail').on('click', function(){
+                contactAjoutChamp('Email', 'email');
+            });
+
+            $('#contact_valider').on('click', function(){
+                recapAjoutContact();
+            });
+        }
+    };
+
+    $('#div_contact').html("<img src='images/loading_spinner.gif' alt='chargement'>");
+    $('#div_contact').show();
+
+    xhttp.open("POST",  "index.php?controller=admin&action=contact&entry=getContact&id_contact=-1", true);
+    xhttp.send();
+    
+    $('#contact_id_contact').val('-1');
+}
+
+ 
 function chargerContact(){
     
     if($('#contact_id_contact').val() == -1){
@@ -117,6 +200,10 @@ function chargerContact(){
         xhttp.onreadystatechange = function() {
             if(this.readyState == 4 && this.status == 200) {
                 $('#div_contact').html(this.responseText);
+                
+                $('#contact_delete').on('click', function(){
+                    deleteContact();
+                });
                 
                 $('#contact_ajoutTel').on('click', function(){
                     contactAjoutChamp('Téléphone', 'tel');
@@ -138,6 +225,25 @@ function chargerContact(){
         xhttp.open("POST",  "index.php?controller=admin&action=contact&entry=getContact&id_contact="+$('#contact_id_contact').val(), true);
         xhttp.send();
     }
+}
+
+function deleteContact(){
+    
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+            if(this.responseText.indexOf("isok") != -1){
+                $.hideModal();
+                $.showNotify('success', 'Contact supprimé avec succès.');
+                
+                document.getElementById('contact_form').reset();
+                listeContacts();
+            }
+        }
+    };
+    
+    xhttp.open("POST", "index.php?controller=admin&action=contact&entry=delete&id_contact="+$('#contact_id_contact').val(), true);
+    xhttp.send();
 }
 
 
@@ -163,10 +269,12 @@ function processContact(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if(this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             if(this.responseText.indexOf("isok") != -1){
                 $.hideModal();
                 $.showNotify('success', 'Contact ajouté/modifié avec succès.');
+                
+                document.getElementById('contact_form').reset();
+                listeContacts();
             }
         }
     };

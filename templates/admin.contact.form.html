@@ -1,6 +1,12 @@
+{if $contact->get_id_contact() neq -1}
+<input id='contact_delete' name='contact_delete' type='button' value='Supprimer ce contact'>
+{/if}
+
 <form id="contact_form" method="POST" action="">
     <input type='hidden' name='form_post' value='1'>
     <input type='hidden' name='contact_id_contact'  value='{$contact->get_id_contact()}'>
+    <input type='hidden' name='contact_id_id_adherent' id='contact_id_id_adherent'  value='{$contact->get_id_adherent()}'>
+    
     
     <label name='contact_nom'>
         <p>Nom</p>

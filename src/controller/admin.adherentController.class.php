@@ -24,25 +24,24 @@ class adminAdherentController{
         
             case "get":
                 getParam('id_adherent', $id_adherent);
-                $adherent = adherent::find($id_adherent);
+                
+                if($id_adherent != '-1'){
+                    $adherent = adherent::find($id_adherent);
+                }
+                else{
+                    $adherent = new adherent();
+                }
                 
                 $smarty->assign("adherent", $adherent);
                 $smarty->Display('admin.adherent.form.html');
             break;
         
-            case "printAdd":
-                $title = "Ajout adhérent" . SITE_TITLE;
-                
-                $adherent = new adherent();
-                
-                $smarty->assign("title", $title);
-                $smarty->assign("subtitle", 'Ajouter');
-                $smarty->assign("adherent", $adherent);
-                $smarty->Display('admin.adherent.add.html');
-            break;
-        
             case "process":
                 $this->processAdherent($smarty);
+            break;
+        
+            case "delete":
+                $this->deleteAdherent();
             break;
         
             default:
@@ -90,6 +89,27 @@ class adminAdherentController{
             $_SESSION["notify_message"] = "Adhérent ajouté avec succès !";
             $_SESSION["notify_type"] = "success";
         }
+    }
+    
+    function deleteAdherent(){
+        $id_adherent = null;
+        
+        getParam('id_adherent', $id_adherent);
+
+        $query = "DELETE FROM telephones WHERE id_contact = (SELECT id_contact FROM adherents WHERE id_adherent = '".$id_adherent."')";
+        postgresDAO::getInstance()->exec($query);
+
+        $query = "DELETE FROM courriels WHERE id_contact = (SELECT id_contact FROM adherents WHERE id_adherent = '".$id_adherent."')";
+        postgresDAO::getInstance()->exec($query);
+        
+        $query = "DELETE FROM contacts WHERE id_contact = (SELECT id_contact FROM adherents WHERE id_adherent = '".$id_adherent."')";
+        postgresDAO::getInstance()->exec($query);
+        
+        $query = "DELETE FROM adherents WHERE id_adherent = '".$id_adherent."'";
+        postgresDAO::getInstance()->exec($query);
+        
+        
+        echo "isok";
     }
     
 }

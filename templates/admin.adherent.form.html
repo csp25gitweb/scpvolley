@@ -1,4 +1,6 @@
-
+{if $adherent->get_id_adherent() neq -1}
+<input id='ad_delete' name='ad_delete' type='button' value='Supprimer cet adhérent'>
+{/if}
 
 <form id='ad_form' method="POST" action="">
     <input type='hidden' name='form_post' value='1'>
