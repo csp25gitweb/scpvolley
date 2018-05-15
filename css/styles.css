@@ -1,3 +1,8 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 /* classes de margin et padding */
 .padding-xs { padding: .25em; }
 .padding-sm { padding: .5em; }
@@ -101,7 +106,6 @@ h1, .jumbotron h1 {
 /* bandeau illustration rubrique */
 .scp_bandeau {
 	height: 300px;
-	/*background: url(../images/photo2.jpg) no-repeat center center fixed;*/
 	background-attachment: fixed;
 	background-position: center center;
 	background-repeat: no-repeat;
@@ -112,21 +116,39 @@ h1, .jumbotron h1 {
 	}
 
 /* alignement logo version mobile */
-@media only screen and (max-device-width: 768px) {
+@media (max-width: 768px) {
     .navbar-left {
 		margin-left: 40%;
 	}
 }
 
+/* carousel */
+.scp_carousel_caption {
+	background-color:white;opacity:0.8;width:100%;left:0;right:0;
+}
+
+/* actualite */
+.scp_visuel_actu {
+	width: 250px;
+}
+
 /* footer */
+.scp_contenu {
+	min-height: calc(100% - 245px);
+}
+
 .footer {
 	background: #EDEFF1;
-	height: auto;
-	padding-bottom: 30px;
 	position: relative;
+	clear: both;
 	width: 100%;
-	border-bottom: 1px solid #CCCCCC;
+	border-radius: 0;
+	border-bottom: 0;
+	border-right: 0;
+	border-left: 0;
 	border-top: 1px solid #DDDDDD;
+	margin-bottom: 0px;
+	padding-bottom: 10px;
 }
 	.footer p {
 		margin: 0;
