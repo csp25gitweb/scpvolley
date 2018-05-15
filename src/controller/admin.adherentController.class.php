@@ -96,13 +96,13 @@ class adminAdherentController{
         
         getParam('id_adherent', $id_adherent);
 
-        $query = "DELETE FROM telephones WHERE id_contact = (SELECT id_contact FROM adherents WHERE id_adherent = '".$id_adherent."')";
+        $query = "DELETE FROM telephones WHERE id_contact IN (SELECT id_contact FROM contacts WHERE id_adherent = '".$id_adherent."')";
         postgresDAO::getInstance()->exec($query);
 
-        $query = "DELETE FROM courriels WHERE id_contact = (SELECT id_contact FROM adherents WHERE id_adherent = '".$id_adherent."')";
+        $query = "DELETE FROM courriels WHERE id_contact IN (SELECT id_contact FROM contacts WHERE id_adherent = '".$id_adherent."')";
         postgresDAO::getInstance()->exec($query);
         
-        $query = "DELETE FROM contacts WHERE id_contact = (SELECT id_contact FROM adherents WHERE id_adherent = '".$id_adherent."')";
+        $query = "DELETE FROM contacts WHERE id_contact IN (SELECT id_contact FROM contacts WHERE id_adherent = '".$id_adherent."')";
         postgresDAO::getInstance()->exec($query);
         
         $query = "DELETE FROM adherents WHERE id_adherent = '".$id_adherent."'";
