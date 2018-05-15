@@ -28,6 +28,10 @@ class adminPartenairesControlleur {
                                    $_POST['lien_logo'],
                                    $_POST['position']);
                 break;
+            case 'delete':
+                $id_partenaire = $_GET['id'];
+                deletePartenaires($id_partenaire);
+                break;
             default:
                 $title = "Gestion des partenaires" . SITE_TITLE;
                 $smarty->assign("title", $title);
@@ -35,6 +39,11 @@ class adminPartenairesControlleur {
                 break;
         }
     }
+}
+
+function deletePartenaires($id_partenaires) {
+    $partenaire = partenaires::find($id_partenaires);
+    partenaires::delete($partenaire);
 }
 
 function verifierPartenaire($titre, $description, $lien_logo, $position) {

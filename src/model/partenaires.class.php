@@ -16,8 +16,9 @@ class partenaires {
         }
     }
     
-    public static function newPartenaire($titre, $description, $lien_logo, $position) {
+    public static function newPartenaire($id_partenaire, $titre, $description, $lien_logo, $position) {
         $obj = new partenaires();
+        $obj->set_id_partenaire($id_partenaire);
         $obj->set_titre($titre);
         $obj->set_description($description);
         $obj->set_lien_logo($lien_logo);
@@ -66,7 +67,7 @@ class partenaires {
     }
     
     private function buildObject($row) {
-        if ( isset($id_partenaire) ) {
+        if ( isset($row['id_partenaire']) ) {
             $this->set_id_partenaire($row['id_partenaire']);
         }
         $this->set_titre($row['titre']);
@@ -83,25 +84,60 @@ class partenaires {
             ':lien_logo' => $this->lien_logo,
             ':position' => $this->position
         );
-        $query = 'INSERT INTO partenaires (titre, description, lien_logo, position)'
+        $sql = 'INSERT INTO partenaires (titre, description, lien_logo, position)'
                 . 'VALUES (:titre, :description, :lien_logo, :position)';
-        $bdd->exec($query, $params);
+        $bdd->exec($sql, $params);
+    }
+    
+    public static function listePositions() {
+        $bdd = postgresDAO::getInstance();
+        $sql = 'SELECT position FROM partenaires';
+        $bdd->exec($sql);
+        $results = $bdd->fetchAll();
+        $listePosition = array();
+        foreach ($results as $key => $position) {
+            if ($key == 'position') {
+                array_push($listePosition, $position);
+            }
+        }
+
+    }
+    
+    public static function delete(partenaires $partenaire) {
+        $bdd = postgresDAO::getInstance();
+        $params = array(':id' => $partenaire->get_id_partenaire());
+        $sql = 'DELETE FROM partenaires WHERE id_partenaire = :id';
+        $bdd->exec($sql, $params);
+    }
+    
+    public static function find($id_partenaire) {
+        $bdd = postgresDAO::getInstance();
+        $params = array(':id' => $id_partenaire);
+        $sql = 'SELECT id_partenaire, titre, description, lien_logo, position FROM partenaires WHERE id_partenaire = :id';
+        $bdd->exec($sql, $params);
+        $result = $bdd->fetchAll();
+        $partenaire = new partenaires($result[0]);
+        return $partenaire;
     }
     
     public static function findAll() {
         $bdd = postgresDAO::getInstance();
         $sql = 'SELECT id_partenaire, titre, description, lien_logo, position FROM partenaires ORDER BY position';
         
-        $bdd->exec($sql);
-        $result = $bdd->fetchAll(PDO::FETCH_ASSOC);
-        
-        $listPartenaires = array();
-        
-        foreach ($result as $pos1 => $row) {
-            array_push($listPartenaires, new partenaires($row));
+        try {
+            $bdd->exec($sql);
+            $result = $bdd->fetchAll();
+
+            $listPartenaires = array();
+
+            foreach ($result as $pos1 => $row) {
+                array_push($listPartenaires, new partenaires($row));
+            }
+
+            return $listPartenaires;
+        } catch (PDOException $err_pdo) {
+            // TODO
         }
-        
-        return $listPartenaires;
     }
     
 }

@@ -2,7 +2,8 @@
 
 <h1>{$title}</h1>
 {foreach from=$listePartenaires key=k item=i}
-    {$i->get_position()} {$i->get_titre()} {$i->get_description()} {$i->get_lien_logo()} <br>
+    {$i->get_position()} {$i->get_titre()} {$i->get_description()} {$i->get_lien_logo()}
+    <a href="index.php?controller=admin&action=partenaires&entry=delete&id={$i->get_id_partenaire()}"> delete </a> <br>
 {/foreach}
 
 {include 'admin.footer.html'}
