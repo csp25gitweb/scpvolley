@@ -1,14 +1,36 @@
 
+<select id='id_adherent' name='id_adherent' >
+    <option value='-1'>- - - - - - - - - - - - - - - - - - - -</option>
+    {foreach $adherents as $value}
+    <option value="{$value->get_id_adherent()}">{$value->get_nom()}&nbsp;{$value->get_prenom()}&nbsp;(&nbsp;{$value->get_date_naissance()}&nbsp;)</option>
+    {/foreach}
+</select>
+<input name='eq_add_player' id='eq_add_player' type='button' value="Ajouter à l'équipe">
+
 
 <form id='eq_form' method="POST" action="">
     <input type='hidden' name='form_post' value='1'>
-    <input type='hidden' name='eq_id_equipe' value='{$equipe->get_id_equipe()}'>
-    <label name='nom'>
+    <input type='hidden' id='eq_id_equipe' name='eq_id_equipe' value='{$equipe->get_id_equipe()}'>
+    <!--<label name='nom'>
         <p>Nom</p>
         <input type='text' name='eq_nom' id='eq_nom' value='{$equipe->get_nom()}'>
-    </label>
-
+    </label>-->
     <br/>
     <br/>
-    <input type='button' id='eq_valider' value='Valider'>
+    
+    <table style="width:100%">
+    {foreach $adherentsDansEquipe as $value}
+    <tr>
+        <td>{$value->get_nom()}</td>
+        <td>{$value->get_prenom()}</td>
+        <td>{$value->get_date_naissance()}</td>
+        <td><input onclick='supprimerJoueur("{$value->get_id_adherent()}");' type='button' value='Supprimer'>
+    </tr>
+    {/foreach}
+    </table>
+    
+    <br/>
+    <br/>
+    
+    <!--<input type='button' id='eq_valider' value='Valider'>-->
 </form>

@@ -141,6 +141,51 @@ class adherent {
         return null;
     }
 
+    public static function findAllBetweenAge($param_age_debut, $param_age_fin){
+        
+        $date_debut = date('Y/m/d', strtotime(date('Y/m/d')) - ($param_age_fin*31536000));
+        $date_fin = date('Y/m/d', strtotime(date('Y/m/d')) - ($param_age_debut*31536000));
+        
+        $bdd = postgresDAO::getInstance();
+        $query = 'SELECT '.adherent::listKnownItems.' FROM adherents WHERE date_naissance >= :date_debut AND date_naissance <= :date_fin ORDER BY surclassement, nom, prenom';
+        $params = array(
+            ':date_debut' => $date_debut,
+            ':date_fin'   => $date_fin
+        );
+        
+        $bdd->exec($query, $params);
+        $result = $bdd->fetchAll();
+
+        $arrayAdherent = array();
+
+        foreach ($result as $key=>$value){
+            array_push($arrayAdherent, new adherent($value));
+        }
+        
+        return $arrayAdherent;
+    }
+    
+    public static function findAllInTeam($param_id_equipe){
+        
+        $bdd = postgresDAO::getInstance();
+        $query = 'SELECT '.adherent::listKnownItems.' FROM adherents'
+            . ' WHERE id_adherent IN (SELECT id_adherent FROM joue WHERE id_equipe = :id_equipe) ORDER BY nom, prenom';
+        $params = array(
+            ':id_equipe' => $param_id_equipe
+        );
+        
+        $bdd->exec($query, $params);
+        $result = $bdd->fetchAll();
+
+        $arrayAdherent = array();
+
+        foreach ($result as $key=>$value){
+            array_push($arrayAdherent, new adherent($value));
+        }
+        
+        return $arrayAdherent;
+    }
+    
     public static function findAll(){
         $bdd = postgresDAO::getInstance();
         $query = 'SELECT '.adherent::listKnownItems.' FROM adherents ORDER BY nom';

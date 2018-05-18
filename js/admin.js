@@ -17,6 +17,10 @@
         chargerEquipe();
     });
     
+    $('#eq_match_valider').on('click', function(){
+        ajouterMatch();
+    });
+    
 })( jQuery );
 
 
@@ -39,7 +43,7 @@ var compteurEmail = 0;
                 });
                 
                 $('#ad_delete').on('click', function(){
-                    deleteAdherent();
+                    $.showModal("Supprimer adhérent", "Êtes-vous sur(e) de vouloir supprimer cet adhérent ?", "Annuler", "deleteAdherent");
                 });
             }
         };
@@ -105,7 +109,7 @@ function deleteAdherent(){
         }
     };
     
-    xhttp.open("POST", "index.php?controller=admin&action=adherent&entry=delete&id_adherent="+$('#ad_id_adherent').val(), true);
+    xhttp.open("POST", "index.php?controller=admin&action=adherent&entry=delete&id_adherent="+$('#id_adherent').val(), true);
     xhttp.send();
 }
 
@@ -202,7 +206,7 @@ function chargerContact(){
                 $('#div_contact').html(this.responseText);
                 
                 $('#contact_delete').on('click', function(){
-                    deleteContact();
+                    $.showModal("Supprimer contact", "Êtes-vous sur(e) de vouloir supprimer ce contact ?", "Annuler", "deleteContact");
                 });
                 
                 $('#contact_ajoutTel').on('click', function(){
@@ -350,6 +354,11 @@ function chargerEquipe(){
         xhttp.onreadystatechange = function() {
             if(this.readyState == 4 && this.status == 200) {
                 $('#div_listeEquipe').html(this.responseText);
+                
+                $('#eq_add_player').on('click', function(){
+                    ajouterJoueur();
+                });
+                
                 $('#eq_valider').on('click', function(){
                     //TODO
                 });
@@ -362,4 +371,53 @@ function chargerEquipe(){
         xhttp.open("POST", "index.php?controller=admin&action=equipe&entry=get&id_equipe="+ $('#id_equipe').val(), true);
         xhttp.send();
     }
+}
+
+function ajouterJoueur(){
+    
+    if( $('#eq_id_equipe').val() > 0 && $('#id_adherent').val() > 0){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if(this.readyState == 4 && this.status == 200) {
+                $.showNotify('success', "Joueur(se) ajouté à l'équipe avec succès.");
+                chargerEquipe();
+            }
+        };
+
+        xhttp.open("POST", "index.php?controller=admin&action=equipe&entry=add&id_equipe="+ $('#eq_id_equipe').val()+"&id_adherent="+$('#id_adherent').val(), true);
+        xhttp.send();
+        
+        $('#div_listeEquipe').html("<img src='images/loading_spinner.gif' alt='chargement'>");
+        $('#div_listeEquipe').show();
+    }
+}
+
+function supprimerJoueur(id_adherent){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+            $.showNotify('success', "Joueur(se) retiré de l'équipe avec succès.");
+            chargerEquipe();
+        }
+    };
+
+    xhttp.open("POST", "index.php?controller=admin&action=equipe&entry=delpla&id_equipe="+ $('#eq_id_equipe').val()+"&id_adherent="+id_adherent, true);
+    xhttp.send();
+
+    $('#div_listeEquipe').html("<img src='images/loading_spinner.gif' alt='chargement'>");
+    $('#div_listeEquipe').show();
+}
+
+
+function ajouterMatch(){
+    
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+            $.showNotify('success', "Match ajouté au calendrier avec succès.");
+        }
+    };
+
+    xhttp.open("POST", "index.php?controller=admin&action=equipe&entry=addmat&id_equipe="+ $('#eq_id_equipe').val()+"&eq_date="+$('#eq_match_date').val()+"&eq_hour="+$('#eq_match_heure').val(), true);
+    xhttp.send();
 }
