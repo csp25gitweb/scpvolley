@@ -124,7 +124,11 @@ h1, .jumbotron h1 {
 
 /* carousel */
 .scp_carousel_caption {
-	background-color:white;opacity:0.8;width:100%;left:0;right:0;
+	background-color:white;
+	opacity:0.8;
+	width:100%;
+	left:0;
+	right:0;
 }
 
 /* actualite */

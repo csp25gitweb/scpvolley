@@ -125,6 +125,7 @@ class adminEquipeController{
         $debut = $eq_date . " " . $eq_hour . ":00:00";
         $fin   = $eq_date . " " . ($eq_hour+2) . ":00:00";
         
+        //Ajout dans table creneaux
         $query = "INSERT INTO creneaux(id_salle, debut, fin) VALUES('1', :debut, :fin)";
         $params = array(
             ':debut'=> $debut,
@@ -134,7 +135,18 @@ class adminEquipeController{
         $bdd = postgresDAO::getInstance();
         $bdd->exec($query, $params);
         
-        //TODO recuperer id creneau et ajouter dans match !
+        //Ajout dans table matchs
+        $id_creneau = $bdd->lastInsertId();
+       
+        $query = "INSERT INTO matchs(id_equipe_a, id_creneau, nom_equipe_b) VALUES(:id_equipe, :id_creneau, 'Adversaire')";
+        $params = array(
+            ':id_equipe'=> $id_equipe,
+            ':id_creneau' => $id_creneau
+        );
+
+        $bdd->exec($query, $params);
+        
+        echo "isok";
     }
     
 }
