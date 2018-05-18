@@ -92,6 +92,24 @@
 })( jQuery );
 
 if($('#calendar').length) {
+    
+    
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+            
+            var myEvents = JSON.parse(this.response);
+            $.showCalendar(myEvents);
+        }
+    };
+
+    //$('#ad_modification').html("<img src='images/loading_spinner.gif' alt='chargement'>");
+    //$('#ad_modification').show();
+
+    xhttp.open("POST", "index.php?controller=agenda&action=getAll", true);
+    xhttp.send();
+    
+    /*
 	var myEvents = [
         {
           title: 'Test match 1',
@@ -107,4 +125,5 @@ if($('#calendar').length) {
         }
       ];
 	$.showCalendar(myEvents);
+        */
 }
