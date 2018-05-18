@@ -131,6 +131,10 @@ h1, .jumbotron h1 {
 	right:0;
 }
 
+.carousel-caption {
+	color: #000;
+}
+
 /* actualite */
 .scp_visuel_actu {
 	width: 250px;

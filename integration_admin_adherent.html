@@ -30,40 +30,39 @@
 			<h2>Gestion des adhérents</h2>
 			
 			<form class="form-horizontal">
+				<div class="form-group text-center">
+					<input class="btn btn-primary" id="ad_id_nouveau" name="ad_id_nouveau" value="Nouvel adhérent" >
+				</div>
+				
 				<div class="form-group">
-					<label for="inputEmail" class="col-lg-2 control-label">Sélectionnez un adhérent</label>
+					<label for="id_adherent" class="col-lg-2 control-label">Sélectionnez un adhérent</label>
 					<div class="col-lg-10">
-						 <select id="id_adherent" name="id_adherent">
-							<option value="-1">- - - - - - - - - - - - - - - - - - - -</option>
-									<option value="0">ADMIN&nbsp;grand chef&nbsp;(&nbsp;2005-10-10&nbsp;)</option>
-									<option value="1">AZLOUNI&nbsp;Sirine&nbsp;(&nbsp;2008-11-25&nbsp;)</option>
-									<option value="2">DELMOTTE&nbsp;Camille&nbsp;(&nbsp;2009-05-21&nbsp;)</option>
-									<option value="3">GUERS&nbsp;Louna&nbsp;(&nbsp;2007-04-12&nbsp;)</option>
-									<option value="4">JOURNADE&nbsp;Mathieu&nbsp;(&nbsp;2008-08-10&nbsp;)</option>
-									<option value="5">LEGAL&nbsp;Camille&nbsp;(&nbsp;2009-01-05&nbsp;)</option>
-									<option value="6">LEMETAYER&nbsp;Gaetane&nbsp;(&nbsp;2007-02-18&nbsp;)</option>
-									<option value="9">TTTTTT&nbsp;oooooo&nbsp;(&nbsp;1999-11-11&nbsp;)</option>
-									<option value="7">VIGIER&nbsp;Maxens&nbsp;(&nbsp;2010-03-13&nbsp;)</option>
-									<option value="8">VIRGILI&nbsp;Margaux&nbsp;(&nbsp;2008-11-27&nbsp;)</option>
-
+						 <select id="id_adherent" name="id_adherent" class="form-control">
+							<option value="-1">---</option>
+							<option value="2">test test</option>
 						</select>
 					</div>
 				</div>
-    ou
-    <input id="ad_id_nouveau" name="ad_id_nouveau" value="Nouvel adhérent" type="button">
-	</form>
+			</form>
+			
+			<div id="ad_modification" style="">
+				
+			<form class="form-horizontal">
+				<div class="form-group text-center">
+					<input class="btn btn-primary" id="ad_delete" name="ad_delete" value="Supprimer cet adhérent" type="button">
+				</div>
+			</form>
 
-<div id="ad_modification" style="">
-
-<input id="ad_delete" name="ad_delete" value="Supprimer cet adhérent" type="button">
-
-<form id="ad_form" method="POST" action="">
-    <input name="form_post" value="1" type="hidden">
-    <input name="ad_id_adherent" value="0" type="hidden">
-    <label name="nom">
-        <p>Nom</p>
-        <input name="ad_nom" id="ad_nom" value="ADMIN" type="text">
-    </label>
+			<form id="ad_form" method="POST" action="" class="form-horizontal">
+				<input name="form_post" value="1" type="hidden">
+				<input name="ad_id_adherent" value="0" type="hidden">
+				
+				<div class="form-group">
+					<label name="nom" for="ad_nom" class="col-lg-2 control-label">Nom</label>
+					<div class="col-lg-10">
+						<input class="form-control" name="ad_nom" id="ad_nom" value="ADMIN" type="text">
+					</div>
+				</div>
 
     <label name="prenom">
         <p>Prénom</p>
@@ -93,7 +92,8 @@
 
 </div>
 			
-        </div>
+		</div>
 	</div>
+	
 </div>
 <!-- MAIN CONTAINER fin -->
