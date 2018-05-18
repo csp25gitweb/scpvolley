@@ -11,10 +11,11 @@
 				<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
 					<h3>Site</h3>
 					<ul>
-						<li><a href="#">Lorem Ipsum</a></li>
-						<li><a href="#">Lorem Ipsum</a></li>
-						<li><a href="#">Lorem Ipsum</a></li>
-						<li><a href="#">Lorem Ipsum</a></li>
+						<li><a href="#">Actualités</a></li>
+						<li><a href="#">Inscription</a></li>
+						<li><a href="#">Agenda</a></li>
+						<li><a href="#">Boutique</a></li>
+						<li><a href="#">Contact</a></li>
 					</ul>
 				</div>
 				<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
@@ -47,6 +48,7 @@
 	
 	<script src="js/calendar/moment.min.js"></script>
 	<script src="js/calendar/fullcalendar.min.js"></script>
+	<script src="js/calendar/fr.js"></script>
 	
 	<script>
 
@@ -56,9 +58,10 @@
       header: {
         left: 'prev,next today',
         center: 'title',
-        right: 'month,basicWeek,basicDay'
+        right: 'month,listDay,listWeek'
       },
       defaultDate: '2018-03-12',
+	  locale: 'fr',
       navLinks: true, // can click day/week names to navigate views
       eventLimit: true, // allow "more" link when too many events
       events: [
