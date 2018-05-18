@@ -74,5 +74,37 @@
 	$.hideNotify = function() {
 		notify.close();
 	}
+	
+	$.showCalendar = function(listEvents) {
+		$('#calendar').fullCalendar({
+			header: {
+			  left: 'prev,next today',
+			  center: 'title',
+			  right: 'month,listWeek,listDay'
+			},
+			locale: 'fr',
+			navLinks: true,
+			eventLimit: true,
+			events: listEvents
+		});
+	}
 
 })( jQuery );
+
+if($('#calendar').length) {
+	var myEvents = [
+        {
+          title: 'Test match 1',
+          start: '2018-05-18T16:00:00',
+          end: '2018-05-18T17:00:00',
+		  color: 'red'
+        },
+		{
+          title: 'Test match 2',
+          start: '2018-05-19T14:00:00',
+          end: '2018-05-19T15:00:00',
+		  color: 'blue'
+        }
+      ];
+	$.showCalendar(myEvents);
+}
