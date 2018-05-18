@@ -10,27 +10,29 @@ class adminPartenairesControlleur {
         getParam("entry", $entry);
         
         switch ($entry) {
-            case 'printList':
-                $title = "Liste des partenaires" . SITE_TITLE;
-                $smarty->assign("title", $title);
-                $listePartenaires = partenaires::findAll();
-                $smarty->assign('listePartenaires', $listePartenaires);
-                $smarty->Display('admin.partenaire.list.html');
+            case 'add':
+                verifierPartenaire($_POST['titre'], 
+                                   $_POST['description'], 
+                                   $_POST['lien_logo'],
+                                   $_POST['position']);
+                header('Location: index.php?controller=admin&action=partenaires&entry=printAdd');
                 break;
             case 'printAdd':
                 $title = "Ajout partenaire" . SITE_TITLE;
                 $smarty->assign("title", $title);
                 $smarty->Display('admin.partenaire.add.html');
                 break;
-            case 'add':
-                verifierPartenaire($_POST['titre'], 
-                                   $_POST['description'], 
-                                   $_POST['lien_logo'],
-                                   $_POST['position']);
-                break;
             case 'delete':
                 $id_partenaire = $_GET['id'];
                 deletePartenaires($id_partenaire);
+                header('Location: index.php?controller=admin&action=partenaires&entry=printList');
+                break;
+            case 'printList':
+                $title = "Liste des partenaires" . SITE_TITLE;
+                $smarty->assign("title", $title);
+                $listePartenaires = partenaires::findAll();
+                $smarty->assign('listePartenaires', $listePartenaires);
+                $smarty->Display('admin.partenaire.list.html');
                 break;
             default:
                 $title = "Gestion des partenaires" . SITE_TITLE;
@@ -47,13 +49,18 @@ function deletePartenaires($id_partenaires) {
 }
 
 function verifierPartenaire($titre, $description, $lien_logo, $position) {
-    $arrayPartenaire = array();
-    $arrayPartenaire['titre'] = $_POST['titre'];
-    $arrayPartenaire['description'] = $_POST['description'];
-    $arrayPartenaire['lien_logo'] = $_POST['lien_logo'];
-    $arrayPartenaire['position'] = $_POST['position'];
-    $monPartenaire = new partenaires($arrayPartenaire);
-    $monPartenaire->save();
+    $listePositions = partenaires::listePositions();
+    if (in_array($position, $listePositions)) {
+        // PAS BON
+    } else {
+        $arrayPartenaire = array();
+        $arrayPartenaire['titre'] = $titre;
+        $arrayPartenaire['description'] = $description;
+        $arrayPartenaire['lien_logo'] = $lien_logo;
+        $arrayPartenaire['position'] = $position;
+        $monPartenaire = new partenaires($arrayPartenaire);
+        $monPartenaire->save();
+    }
 }
 
 ?>

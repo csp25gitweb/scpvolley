@@ -87,20 +87,22 @@ class partenaires {
         $sql = 'INSERT INTO partenaires (titre, description, lien_logo, position)'
                 . 'VALUES (:titre, :description, :lien_logo, :position)';
         $bdd->exec($sql, $params);
+        $this->set_id_partenaire($bdd->lastInsertId());
     }
     
     public static function listePositions() {
         $bdd = postgresDAO::getInstance();
         $sql = 'SELECT position FROM partenaires';
         $bdd->exec($sql);
-        $results = $bdd->fetchAll();
+        $results = $bdd->fetchAll(PDO::FETCH_COLUMN);
         $listePosition = array();
-        foreach ($results as $key => $position) {
-            if ($key == 'position') {
-                array_push($listePosition, $position);
+        foreach ($results as $i => $j) {
+            foreach ($j as $key => $position) {
+                if ($key == 'position') {
+                    array_push($listePosition, $position);
+                }
             }
         }
-
     }
     
     public static function delete(partenaires $partenaire) {
