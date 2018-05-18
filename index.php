@@ -30,6 +30,8 @@ switch($s_controller) {
     break;
 
     case 'agenda':
+        require_once('src/controller/agendaController.class.php');
+        new agendaController();
     break;
 
     case 'inscription':
