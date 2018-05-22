@@ -34,7 +34,14 @@ switch($s_controller) {
         new agendaController();
     break;
 
+    case 'boutique':
+        require_once('src/controller/boutiqueController.class.php');
+        new boutiqueController();
+    break;
+
     case 'inscription':
+        require_once('src/controller/inscriptionController.class.php');
+        new inscriptionController();
     break;
 
     default:
