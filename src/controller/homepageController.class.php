@@ -1,5 +1,7 @@
 <?php
 
+require_once('src/model/partenaires.class.php');
+
 class homepageController extends AbstractController{
 	
     public function __construct() {
@@ -25,8 +27,11 @@ class homepageController extends AbstractController{
 
     public function printIndex() {
         $title = "Accueil" . SITE_TITLE;
+        $partenaires = partenaires::findAll();
 
         $this->smarty->assign('title', $title);
+        $this->smarty->assign("partenaires", $partenaires);
+        
         $this->smarty->Display('home.home.html');
     }
 }
