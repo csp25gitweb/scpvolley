@@ -30,67 +30,85 @@
 			<h2>Gestion des adhérents</h2>
 			
 			<form class="form-horizontal">
-				<div class="form-group text-center">
-					<input class="btn btn-primary" id="ad_id_nouveau" name="ad_id_nouveau" value="Nouvel adhérent" >
+				<div class="form-group text col-md-12">
+					<input class="btn btn-success" id="ad_id_nouveau" name="ad_id_nouveau" value="Nouvel adhérent" >
 				</div>
 				
 				<div class="form-group">
 					<label for="id_adherent" class="col-lg-2 control-label">Sélectionnez un adhérent</label>
-					<div class="col-lg-10">
+					<div class="col-lg-6">
 						 <select id="id_adherent" name="id_adherent" class="form-control">
 							<option value="-1">---</option>
 							<option value="2">test test</option>
 						</select>
+					</div>
+					<div class="col-lg-4 text-center">
+						<input class="btn btn-default" id="ad_delete" name="ad_delete" value="Supprimer cet adhérent" type="button">
 					</div>
 				</div>
 			</form>
 			
 			<div id="ad_modification" style="">
 				
-			<form class="form-horizontal">
-				<div class="form-group text-center">
-					<input class="btn btn-primary" id="ad_delete" name="ad_delete" value="Supprimer cet adhérent" type="button">
-				</div>
-			</form>
+				<form class="form-horizontal">
+					<div class="form-group text-center">
 
-			<form id="ad_form" method="POST" action="" class="form-horizontal">
-				<input name="form_post" value="1" type="hidden">
-				<input name="ad_id_adherent" value="0" type="hidden">
-				
-				<div class="form-group">
-					<label name="nom" for="ad_nom" class="col-lg-2 control-label">Nom</label>
-					<div class="col-lg-10">
-						<input class="form-control" name="ad_nom" id="ad_nom" value="ADMIN" type="text">
 					</div>
-				</div>
+				</form>
 
-    <label name="prenom">
-        <p>Prénom</p>
-        <input name="ad_prenom" id="ad_prenom" value="grand chef" type="text">
-    </label>
+				<form id="ad_form" method="POST" action="" class="form-horizontal">
+					<input name="form_post" value="1" type="hidden">
+					<input name="ad_id_adherent" value="0" type="hidden">
 
-    <label name="naissance">
-        <p>Date de naissance</p>
-        <input name="ad_naissance" id="ad_naissance" value="2005-10-10" type="date">
-    </label>
-    
-    <label name="genre">
-        <p>Genre</p>
-        <label><input name="ad_genre" id="ad_genre" value="M" checked="" type="radio">Homme</label>
-        <label><input name="ad_genre" id="ad_genre" value="F" type="radio">Femme</label>
-    </label>
-    
-    <label name="licence">
-        <p>Numéro de licence</p>
-        <input name="ad_licence" id="ad_licence" value="0000" type="text">
-    </label>
-    
-    <br>
-    <br>
-    <input id="ad_valider" value="Valider" type="button">
-</form>
+					<div class="form-group">
+						<label for="ad_nom" class="col-lg-2 control-label">Nom</label>
+						<div class="col-lg-10">
+							<input class="form-control" name="ad_nom" id="ad_nom" value="ADMIN" type="text">
+						</div>
+					</div>
 
-</div>
+					<div class="form-group">
+						<label for="ad_prenom" class="col-lg-2 control-label">Prénom</label>
+						<div class="col-lg-10">
+							<input class="form-control" name="ad_prenom" id="ad_prenom" value="grand chef" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="ad_naissance" class="col-lg-2 control-label">Date de naissance</label>
+						<div class="col-lg-10">
+							<input class="form-control" name="ad_naissance" id="ad_naissance" value="2005-10-10" type="date">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="ad_genre" class="col-lg-2 control-label">Date de naissance</label>
+						<div class="col-lg-10">
+							<div class="radio">
+								<label><input name="ad_genre" id="ad_genre_m" value="M" checked="" type="radio">Homme</label>
+							</div>
+							<div class="radio">
+								<label><input name="ad_genre" id="ad_genre_f" value="M" checked="" type="radio">Femme</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="ad_licence" class="col-lg-2 control-label">Numéro de licence</label>
+						<div class="col-lg-10">
+							<input class="form-control" name="ad_licence" id="ad_licence" value="0000" type="text">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-lg-10 col-lg-offset-2 text-right">
+							<input class="btn btn-primary" id="ad_valider" value="Valider" type="button">
+						</div>
+					</div>
+					
+				</form>
+				
+			</div>
 			
 		</div>
 	</div>
