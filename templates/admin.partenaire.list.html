@@ -2,8 +2,12 @@
 
 <h1>{$title}</h1>
 {foreach from=$listePartenaires key=k item=i}
-    {$i->get_position()} {$i->get_titre()} {$i->get_description()} {$i->get_lien_logo()}
-    <a href="index.php?controller=admin&action=partenaires&entry=delete&id={$i->get_id_partenaire()}"> delete </a> <br>
+<img src="{$i->get_lien_logo()}" alt="$i->get_titre" width="150" height=auto>
+{$i->get_position()} {$i->get_titre()} </br> 
+{$i->get_description()} </br>
+<a href="{$i->get_lien()}"> {$i->get_lien()} </a> </br>
+<a href="index.php?controller=admin&action=partenaires&entry=delete&id={$i->get_id_partenaire()}"> supprimer </a> <br>
+</br>
 {/foreach}
 
 {include 'admin.footer.html'}

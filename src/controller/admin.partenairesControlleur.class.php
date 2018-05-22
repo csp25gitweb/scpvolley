@@ -14,7 +14,9 @@ class adminPartenairesControlleur {
                 verifierPartenaire($_POST['titre'], 
                                    $_POST['description'], 
                                    $_POST['lien_logo'],
-                                   $_POST['position']);
+                                   $_POST['position'],
+                                   $_POST['lien']
+                        );
                 header('Location: index.php?controller=admin&action=partenaires&entry=printAdd');
                 break;
             case 'printAdd':
@@ -48,7 +50,7 @@ function deletePartenaires($id_partenaires) {
     partenaires::delete($partenaire);
 }
 
-function verifierPartenaire($titre, $description, $lien_logo, $position) {
+function verifierPartenaire($titre, $description, $lien_logo, $position, $lien) {
     $listePositions = partenaires::listePositions();
     if (in_array($position, $listePositions)) {
         // PAS BON
@@ -58,7 +60,9 @@ function verifierPartenaire($titre, $description, $lien_logo, $position) {
         $arrayPartenaire['description'] = $description;
         $arrayPartenaire['lien_logo'] = $lien_logo;
         $arrayPartenaire['position'] = $position;
+        $arrayPartenaire['lien'] = $lien;
         $monPartenaire = new partenaires($arrayPartenaire);
+        print_r($monPartenaire->get_lien());
         $monPartenaire->save();
     }
 }
