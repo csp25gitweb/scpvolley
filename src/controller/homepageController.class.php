@@ -24,7 +24,7 @@ class homepageController extends AbstractController{
     }
 
     public function printIndex() {
-        $title = "Gestion équipe" . SITE_TITLE;
+        $title = "Accueil" . SITE_TITLE;
 
         $this->smarty->assign('title', $title);
         $this->smarty->Display('home.home.html');
