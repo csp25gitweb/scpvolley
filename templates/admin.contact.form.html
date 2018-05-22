@@ -1,82 +1,120 @@
+
+<div class="col-md-9">
+
 {if $contact->get_id_contact() neq -1}
-<input id='contact_delete' name='contact_delete' type='button' value='Supprimer ce contact'>
+<div class="form-group">
+    <div class="col-lg-3 text-left">
+        <input class="btn btn-primary" id='contact_delete' name='contact_delete' type='button' value='Supprimer ce contact'>
+    </div>
+</div>
 {/if}
 
-<form id="contact_form" method="POST" action="">
+<div class="form-group">
+    <br/>
+</div>
+
+
+<form id="contact_form" method="POST" action="" class="form-horizontal">
     <input type='hidden' name='form_post' value='1'>
     <input type='hidden' name='contact_id_contact'  value='{$contact->get_id_contact()}'>
     <input type='hidden' name='contact_id_id_adherent' id='contact_id_id_adherent'  value='{$contact->get_id_adherent()}'>
     
+    <div class="form-group">
+        <label for="contact_nom" class="col-lg-2 control-label">Nom</label>
+        <div class="col-lg-8">
+            <input class="form-control" name="contact_nom" id="contact_nom" value="{$contact->get_prenom()}" type="text">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for='contact_prenom' class="col-lg-2 control-label">Prénom</label>
+        <div class="col-lg-8">
+            <input class="form-control" type='text' name='contact_prenom' id='contact_prenom' value='{$contact->get_nom()}'>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label name='contact_adresse' class="col-lg-2 control-label">Adresse</label>
+        <div class="col-lg-8">
+            <input class="form-control" type='text' name='contact_adresse' id='contact_adresse' value='{$contact->get_adresse()}'>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label name='contact_cp' class="col-lg-2 control-label">Code&nbsp;postal</label>
+        <div class="col-lg-8">
+            <input class="form-control" type='text' size='5' maxlength='5' name='contact_cp' id='contact_cp' value='{$contact->get_code_postal()}'>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label name='contact_ville' class="col-lg-2 control-label">Ville</label>
+        <div class="col-lg-8">
+            <input class="form-control" type='text' name='contact_ville' id='contact_ville' value='{$contact->get_ville()}'>
+        </div>
+    </div>
     
-    <label name='contact_nom'>
-        <p>Nom</p>
-        <input type='text' name='contact_nom' id='contact_nom' value='{$contact->get_prenom()}'>
-    </label>
-
-    <label name='contact_prenom'>
-        <p>Prénom</p>
-        <input type='text' name='contact_prenom' id='contact_prenom' value='{$contact->get_nom()}'>
-    </label>
-
-    <label name='contact_adresse'>
-        <p>Adresse</p>
-        <input type='text' name='contact_adresse' id='contact_adresse' value='{$contact->get_adresse()}'>
-    </label>
-
-    <label name='contact_cp'>
-        <p>Code&nbsp;postal</p>
-        <input type='text' size='5' maxlength='5' name='contact_cp' id='contact_cp' value='{$contact->get_code_postal()}'>
-    </label>
-
-    <label name='contact_ville'>
-        <p>Ville</p>
-        <input type='text' name='contact_ville' id='contact_ville' value='{$contact->get_ville()}'>
-    </label>
-
-    <br/><br/>
+    <div class="form-group">
     <fieldset>
         <legend>Numéro(s) de téléphone</legend>
-
+        
+        <div class="form-group">
         <input type='hidden' id='contact_telNb' name='contact_telNb' value='{$telNb}'>
-        <input type='button' id='contact_ajoutTel' value='Ajouter'>
-        <div id='contact_liste_tel'>
+        <input class="btn btn-success" type='button' id='contact_ajoutTel' value='Ajouter'>
+        </div>
+        
+        <div class="form-group" id='contact_liste_tel'>
         {assign var=compteur value=0}
         {foreach $telephones as $value}
             <div id="contact_div_tel_{$compteur}">
-                <label name="contact_tel_{$compteur}">
-                    <p>Téléphone</p>
-                    <input name="contact_id_telephone_{$compteur}" id="contact_id_telephone_{$compteur}" value="{$value->get_id_telephone()}" type="hidden">
-                    <input name="contact_tel_{$compteur}" id="contact_tel_{$compteur}" value="{$value->get_telephone()}" type="text">
-                    <input value="Supprimer" onclick="contactSupprDiv(&quot;contact_div_tel_{$compteur}&quot;);return;" type="button">
-                </label>
+                <input name="contact_id_telephone_{$compteur}" id="contact_id_telephone_{$compteur}" value="{$value->get_id_telephone()}" type="hidden">
+                <span class='col-lg-6'>
+                    <input class="form-control" name="contact_tel_{$compteur}" id="contact_tel_{$compteur}" value="{$value->get_telephone()}" type="text">
+                </span>
+                <span class='col-lg-3'>
+                    <input class="btn btn-primary" value="Supprimer" onclick="contactSupprDiv(&quot;contact_div_tel_{$compteur}&quot;);return;" type="button">
+                </span>
             </div>
         {assign var=compteur value=$compteur+1}
         {/foreach}
         </div>
     </fieldset>
+    </div>
 
+    <div class="form-group">
     <fieldset>
         <legend>Adresse(s) e-mail</legend>
-
+        
+        <div class="form-group">
         <input type='hidden' id='contact_emailNb' name='contact_emailNb' value='{$courrielsNb}'>
-        <input type='button' id='contact_ajoutEmail' value='Ajouter'>
-        <div id='contact_liste_email'>
+        <input class="btn btn-success" type='button' id='contact_ajoutEmail' value='Ajouter'>
+        </div>
+        
+        <div class="form-group" id='contact_liste_email'>
         {assign var=compteur value=0}
         {foreach $courriels as $value}
             <div id="contact_div_email_{$compteur}">
-                <label name="contact_email_{$compteur}">
-                    <p>Email</p>
-                    <input name="contact_id_courriel_{$compteur}" id="contact_id_courriel_{$compteur}" value="{$value->get_id_courriel()}" type="hidden">
-                    <input name="contact_email_{$compteur}" id="contact_email_{$compteur}" value="{$value->get_courriel()}" type="text">
-                    <input value="Supprimer" onclick="contactSupprDiv(&quot;contact_div_email_{$compteur}&quot;);return;" type="button">
-                </label>
+                <input name="contact_id_courriel_{$compteur}" id="contact_id_courriel_{$compteur}" value="{$value->get_id_courriel()}" type="hidden">
+                <span class='col-lg-6'>
+                <input class="form-control" name="contact_email_{$compteur}" id="contact_email_{$compteur}" value="{$value->get_courriel()}" type="text">
+                </span>
+                <span class='col-lg-3'>
+                <input class="btn btn-primary" value="Supprimer" onclick="contactSupprDiv(&quot;contact_div_email_{$compteur}&quot;);return;" type="button">
+                </span>
             </div>
         {assign var=compteur value=$compteur+1}
         {/foreach}
         </div>
     </fieldset>
+    </div>
 
     <br/>
     <br/>
-    <input type='button' id='contact_valider' value='Valider'>
+    <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2 text-right">
+            <input class="btn btn-success" type='button' id='contact_valider' value='Valider'>
+        </div>
+    </div>
 </form>
+
+</div>

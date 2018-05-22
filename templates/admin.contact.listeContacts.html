@@ -1,19 +1,29 @@
 
-<label name='liste_contact'>
-    <p>Contact concerné</p>
+<div class="col-md-9">
+<form class="form-horizontal">
+    <label for="contact_id_contact" class="col-lg-3 control-label">Sélectionnez un contacts</label>
+    <div class="col-lg-9">
 
-    <select id='contact_id_contact' name='contact_id_contact'>
+    <select id='contact_id_contact' name='contact_id_contact' class="form-control">
         <option value='-1'>- - - - - - - - - - - - - - - - - - - -</option>
         {foreach $contact as $value}
         <option value="{$value->get_id_contact()}">{$value->get_nom()}&nbsp;{$value->get_prenom()}</option>
         {/foreach}
     </select>
-    ou
-    <input id='contact_id_nouveau' name='contact_id_nouveau' type="button" value="Nouveau contact">
-
-</label>
-
+    </div>
+    
+    <div class="form-group">
+        <div class="col-lg-9 col-lg-offset-3 text-right">
+        <input id='contact_id_nouveau' name='contact_id_nouveau' type="button" value="Nouveau contact" class="btn btn-success">
+        </div>
+    </div>
+        
+</form>
+ </div>
+    
 <div id='div_contact' style='display:none;'>
     
 </div>
+    
+
 
