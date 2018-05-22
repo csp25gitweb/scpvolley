@@ -295,45 +295,51 @@ function contactAjoutChamp(nom, suffixe){
     
     compteur = document.getElementById('contact_'+suffixe+'Nb').value
     
-    var label = document.createElement('label');
-    label.setAttribute('name', 'contact_'+suffixe+'_'+compteur);
-    
-    var p = document.createElement('p');
-    p.innerHTML = nom;
+    var span_1 = document.createElement('span');
+    span_1.setAttribute('class', 'col-lg-6');
     
     var inputText = document.createElement('input');
     inputText.setAttribute('name', 'contact_'+suffixe+'_'+compteur);
     inputText.setAttribute('id', 'contact_'+suffixe+'_'+compteur);
+    inputText.setAttribute('class', 'form-control');
+    
+    span_1.appendChild(inputText);
+    
+    
+    var span_2 = document.createElement('span');
+    span_2.setAttribute('class', 'col-lg-3');
     
     var inputButton = document.createElement('input');
     inputButton.setAttribute('type', 'button');
     inputButton.setAttribute('value', 'Supprimer');
+    inputButton.setAttribute('class', 'btn btn-primary');
     inputButton.setAttribute('onclick', 'contactSupprDiv("contact_div_'+suffixe+'_'+compteur+'");return;');
 
-    label.appendChild(p);
-    label.appendChild(inputText);
-    label.appendChild(inputButton);
+    span_2.appendChild(inputButton);
     
     var parent = document.getElementById('contact_liste_'+suffixe);
     var newdiv = document.createElement('div');
     newdiv.setAttribute('id', 'contact_div_'+suffixe+'_'+compteur);
-    newdiv.appendChild(label);
+    
+    //newdiv.appendChild(span_1);
+    newdiv.appendChild(span_1);
+    newdiv.appendChild(span_2);
     parent.appendChild(newdiv);
     
     compteur++;
     document.getElementById('contact_'+suffixe+'Nb').value = compteur;
 }
 
-function contactSupprDiv(div){
+    function contactSupprDiv(div){
     var child = document.getElementById(div);
     
-    if(child.children[0].children[1].type == 'hidden'){
+    if(child.children[0].type == 'hidden'){
         var xhttp = new XMLHttpRequest();
-        if(child.children[0].children[1].name.indexOf("courriel") != -1 ){
-            xhttp.open("POST", "index.php?controller=admin&action=contact&entry=delEma&delid="+child.children[0].children[1].value, true);
+        if(child.children[0].name.indexOf("courriel") != -1 ){
+            xhttp.open("POST", "index.php?controller=admin&action=contact&entry=delEma&delid="+child.children[0].value, true);
         }
         else{
-            xhttp.open("POST", "index.php?controller=admin&action=contact&entry=delTel&delid="+child.children[0].children[1].value, true); 
+            xhttp.open("POST", "index.php?controller=admin&action=contact&entry=delTel&delid="+child.children[0].value, true); 
         }
     
         xhttp.send();
