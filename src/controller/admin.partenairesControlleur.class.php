@@ -39,6 +39,7 @@ class adminPartenairesControlleur {
             default:
                 $title = "Gestion des partenaires" . SITE_TITLE;
                 $smarty->assign("title", $title);
+                $smarty->assign('lien_partenaire', '1');
                 $smarty->Display('admin.partenaire.html');
                 break;
         }

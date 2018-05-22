@@ -44,6 +44,11 @@ switch($s_controller) {
         new inscriptionController();
     break;
 
+    case 'actualite':
+        require_once('src/controller/actualiteController.class.php');
+        new actualiteController();
+    break;
+
     default:
             // 404
     break;
