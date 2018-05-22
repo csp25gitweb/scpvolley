@@ -1,5 +1,33 @@
+<?php
+/* Smarty version 3.1.30, created on 2018-05-22 11:44:17
+  from "/home/csp37/public_html/scpvolley/templates/home.home.html" */
 
-{include 'home.header.html'}
+/* @var Smarty_Internal_Template $_smarty_tpl */
+if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
+  'version' => '3.1.30',
+  'unifunc' => 'content_5b03e671dbfe16_83990754',
+  'has_nocache_code' => false,
+  'file_dependency' => 
+  array (
+    '8f9ba20c9e809f6de063fecf94bba76b1c400077' => 
+    array (
+      0 => '/home/csp37/public_html/scpvolley/templates/home.home.html',
+      1 => 1526982253,
+      2 => 'file',
+    ),
+  ),
+  'includes' => 
+  array (
+    'file:home.header.html' => 1,
+    'file:home.footer.html' => 1,
+  ),
+),false)) {
+function content_5b03e671dbfe16_83990754 (Smarty_Internal_Template $_smarty_tpl) {
+?>
+
+<?php $_smarty_tpl->_subTemplateRender("file:home.header.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
+?>
+
 
 <!-- JUMBOTRON -->
 	<div class="jumbotron">
@@ -75,17 +103,29 @@
 			<div class="panel-body">
 				<div class="row text-center">
                                     
-                                        {foreach $partenaires as $value}
+                                        <?php
+$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['partenaires']->value, 'value');
+if ($_from !== null) {
+foreach ($_from as $_smarty_tpl->tpl_vars['value']->value) {
+?>
 					<!-- item partenaire -->
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                                            <img class="img-circle" src="{$value->get_lien_logo()}" style="width: 140px; height: 140px;">
-						<h4>{$value->get_titre()}</h4>
-						<p>{$value->get_description()}</p>
+                                            <img class="img-circle" src="<?php echo $_smarty_tpl->tpl_vars['value']->value->get_lien_logo();?>
+" style="width: 140px; height: 140px;">
+						<h4><?php echo $_smarty_tpl->tpl_vars['value']->value->get_titre();?>
+</h4>
+						<p><?php echo $_smarty_tpl->tpl_vars['value']->value->get_description();?>
+</p>
 						<p><a class="btn btn-primary" href="#">En savoir plus</a></p>
                                         </div>
                                         <span>&nbsp;</span>
 					<!-- item partenaire fin -->
-                                         {/foreach}
+                                         <?php
+}
+}
+$_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl);
+?>
+
 				</div>
 			</div>
 		</div>
@@ -94,4 +134,6 @@
 	</div>
 	<!-- MAIN CONTAINER -->
         
-{include 'home.footer.html'}
+<?php $_smarty_tpl->_subTemplateRender("file:home.footer.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
+}
+}
