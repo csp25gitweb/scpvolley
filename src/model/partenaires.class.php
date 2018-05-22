@@ -6,6 +6,7 @@ class partenaires {
     private $description;
     private $lien_logo;
     private $position;
+    private $lien;
     
     public function __construct($row = null) {
         if( $row != null ){
@@ -16,13 +17,14 @@ class partenaires {
         }
     }
     
-    public static function newPartenaire($id_partenaire, $titre, $description, $lien_logo, $position) {
+    public static function newPartenaire($id_partenaire, $titre, $description, $lien_logo, $position, $lien) {
         $obj = new partenaires();
         $obj->set_id_partenaire($id_partenaire);
         $obj->set_titre($titre);
         $obj->set_description($description);
         $obj->set_lien_logo($lien_logo);
         $obj->set_position($position);
+        $obj->set_lien($lien);
         return $obj;
     } 
     
@@ -66,6 +68,14 @@ class partenaires {
         $this->position = $position;
     }
     
+    public function get_lien() {
+        return $this->lien;
+    }
+    
+    public function set_lien($lien) {
+        $this->lien = $lien;
+    }
+    
     private function buildObject($row) {
         if ( isset($row['id_partenaire']) ) {
             $this->set_id_partenaire($row['id_partenaire']);
@@ -74,6 +84,7 @@ class partenaires {
         $this->set_description($row['description']);
         $this->set_lien_logo($row['lien_logo']);
         $this->set_position($row['position']);
+        $this->set_lien($row['lien']);
     }
     
     public function save() {
@@ -82,10 +93,11 @@ class partenaires {
             ':titre' => $this->titre,
             ':description' => $this->description,
             ':lien_logo' => $this->lien_logo,
-            ':position' => $this->position
+            ':position' => $this->position,
+            ':lien' => $this->lien
         );
-        $sql = 'INSERT INTO partenaires (titre, description, lien_logo, position)'
-                . 'VALUES (:titre, :description, :lien_logo, :position)';
+        $sql = 'INSERT INTO partenaires (titre, description, lien_logo, position, lien)'
+                . 'VALUES (:titre, :description, :lien_logo, :position, :lien)';
         $bdd->exec($sql, $params);
         $this->set_id_partenaire($bdd->lastInsertId());
     }
@@ -103,6 +115,7 @@ class partenaires {
                 }
             }
         }
+        return $listePosition;
     }
     
     public static function delete(partenaires $partenaire) {
@@ -115,7 +128,7 @@ class partenaires {
     public static function find($id_partenaire) {
         $bdd = postgresDAO::getInstance();
         $params = array(':id' => $id_partenaire);
-        $sql = 'SELECT id_partenaire, titre, description, lien_logo, position FROM partenaires WHERE id_partenaire = :id';
+        $sql = 'SELECT id_partenaire, titre, description, lien_logo, position, lien FROM partenaires WHERE id_partenaire = :id';
         $bdd->exec($sql, $params);
         $result = $bdd->fetchAll();
         $partenaire = new partenaires($result[0]);
@@ -124,7 +137,7 @@ class partenaires {
     
     public static function findAll() {
         $bdd = postgresDAO::getInstance();
-        $sql = 'SELECT id_partenaire, titre, description, lien_logo, position FROM partenaires ORDER BY position';
+        $sql = 'SELECT id_partenaire, titre, description, lien_logo, position, lien FROM partenaires ORDER BY position';
         
         try {
             $bdd->exec($sql);
