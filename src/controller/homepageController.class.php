@@ -18,13 +18,16 @@ class homepageController extends AbstractController{
             break;
 
             default:
-                    // 404
+                $this->printIndex();
             break;
         }
     }
 
     public function printIndex() {
-        echo 'homepage controller...';
+        $title = "Gestion équipe" . SITE_TITLE;
+
+        $this->smarty->assign('title', $title);
+        $this->smarty->Display('home.home.html');
     }
 }
 

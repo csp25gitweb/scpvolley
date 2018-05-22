@@ -1,37 +1,61 @@
-{if $adherent->get_id_adherent() neq -1}
-<input id='ad_delete' name='ad_delete' type='button' value='Supprimer cet adhérent'>
-{/if}
+<form class="form-horizontal">
+    <div class="form-group text-center">
+        {if $adherent->get_id_adherent() neq -1}
+        <div class="col-lg-4 text-center">
+            <input class="btn btn-default" id="ad_delete" name="ad_delete" value="Supprimer cet adhérent" type="button">
+        </div>
+        {/if}
+    </div>
+</form>
 
-<form id='ad_form' method="POST" action="">
+<form id='ad_form' method="POST" action="" class="form-horizontal">
     <input type='hidden' name='form_post' value='1'>
     <input type='hidden' name='ad_id_adherent' value='{$adherent->get_id_adherent()}'>
-    <label name='nom'>
-        <p>Nom</p>
-        <input type='text' name='ad_nom' id='ad_nom' value='{$adherent->get_nom()}'>
-    </label>
+    
+    <div class="form-group">
+        <label for="ad_nom" class="col-lg-2 control-label">Nom</label>
+        <div class="col-lg-10">
+            <input class="form-control" name="ad_nom" id="ad_nom" value="{$adherent->get_nom()}" type="text">
+        </div>
+    </div>
 
-    <label name='prenom'>
-        <p>Prénom</p>
-        <input type='text' name='ad_prenom' id='ad_prenom' value='{$adherent->get_prenom()}'>
-    </label>
+    <div class="form-group">
+        <label for="ad_prenom" class="col-lg-2 control-label">Prénom</label>
+        <div class="col-lg-10">
+            <input class="form-control" name="ad_prenom" id="ad_prenom" value="{$adherent->get_prenom()}" type="text">
+        </div>
+    </div>
 
-    <label name='naissance'>
-        <p>Date de naissance</p>
-        <input type='date' name='ad_naissance' id='ad_naissance' value='{$adherent->get_date_naissance()}'>
-    </label>
+    <div class="form-group">
+        <label for="ad_naissance" class="col-lg-2 control-label">Date de naissance</label>
+        <div class="col-lg-10">
+            <input class="form-control" name="ad_naissance" id="ad_naissance" value="{$adherent->get_date_naissance()}" type="date">
+        </div>
+    </div>
     
-    <label name='genre'>
-        <p>Genre</p>
-        <label><input type='radio' name='ad_genre' id='ad_genre' value='M' {if $adherent->get_genre() eq 'M'}checked{/if}>Homme</label>
-        <label><input type='radio' name='ad_genre' id='ad_genre' value='F' {if $adherent->get_genre() eq 'F'}checked{/if}>Femme</label>
-    </label>
     
-    <label name='licence'>
-        <p>Numéro de licence</p>
-        <input type='text' name='ad_licence' id='ad_licence' value='{$adherent->get_no_licence()}'>
-    </label>
+    <div class="form-group">
+        <label for="ad_genre" class="col-lg-2 control-label">Date de naissance</label>
+        <div class="col-lg-10">
+            <div class="radio">
+                    <label><input name="ad_genre" id="ad_genre_m" value="M" {if $adherent->get_genre() eq 'M'}checked{/if} type="radio">Homme</label>
+            </div>
+            <div class="radio">
+                    <label><input name="ad_genre" id="ad_genre_f" value="F" {if $adherent->get_genre() eq 'F'}checked{/if} type="radio">Femme</label>
+            </div>
+        </div>
+    </div>
     
-    <br/>
-    <br/>
-    <input type='button' id='ad_valider' value='Valider'>
+    <div class="form-group">
+        <label for="ad_licence" class="col-lg-2 control-label">Numéro de licence</label>
+        <div class="col-lg-10">
+            <input class="form-control" name="ad_licence" id="ad_licence" value="{$adherent->get_no_licence()}" type="text">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2 text-right">
+            <input class="btn btn-primary" id="ad_valider" value="Valider" type="button">
+        </div>
+    </div>
 </form>

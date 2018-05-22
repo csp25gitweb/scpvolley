@@ -91,7 +91,7 @@ class adminEquipeController{
         
         $query = "INSERT INTO joue(id_adherent, id_equipe) VALUES(:id_adherent, :id_equipe)";
         $params = array(
-            'id_adherent'=> $id_adherent,
+            ':id_adherent'=> $id_adherent,
             ':id_equipe' => $id_equipe
         );
         
@@ -107,7 +107,7 @@ class adminEquipeController{
         
         $query = "DELETE FROM joue WHERE id_adherent = :id_adherent AND id_equipe = :id_equipe";
         $params = array(
-            'id_adherent'=> $id_adherent,
+            ':id_adherent'=> $id_adherent,
             ':id_equipe' => $id_equipe
         );
         

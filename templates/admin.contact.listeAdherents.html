@@ -1,17 +1,21 @@
 
+<div class="col-md-9">
+    <p>Gestion des contacts</p>
 
-<label name='contact_adherent'>
-    <p>Gestion des contacts - Liste des adhérents</p>
-
-    <select id='contact_id_adherent' name='contact_id_adherent'>
+    <form class="form-horizontal">
+    <label for="id_adherent" class="col-lg-3 control-label">Sélectionnez un adhérent</label>
+    <div class="col-lg-9">
+    <select id='contact_id_adherent' name='contact_id_adherent' class="form-control">
         <option value='-1'>- - - - - - - - - - - - - - - - - - - -</option>
         {foreach $adherents as $value}
         <option value="{$value->get_id_adherent()}">{$value->get_nom()}&nbsp;{$value->get_prenom()}&nbsp;(&nbsp;{$value->get_date_naissance()}&nbsp;)</option>
         {/foreach}
     </select>
-
-</label>
+    </div>
+    </form>
 
 <div id='id_listeContacts' style='display:none;'>
     
+</div>
+
 </div>

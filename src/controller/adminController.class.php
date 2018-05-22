@@ -17,7 +17,7 @@ class adminController extends AbstractController {
         
         //TODO verifier habilitation
         
-        $adminSmarty = $this->adminIsConnected() ? '1' : '0';
+        $adminSmarty = '1';
         $this->smarty->assign('admin', $adminSmarty);
 
         switch($action){

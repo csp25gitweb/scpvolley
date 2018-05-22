@@ -48,6 +48,8 @@ class authController extends AbstractController {
             if($result != null){
                 $_SESSION["login"] = $login;
                 $_SESSION["is_connected"] = true;
+                
+                header('Location: index.php?controller=admin&action=adherent&entry=list');
             }
         }
     }
