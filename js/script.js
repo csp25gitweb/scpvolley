@@ -103,27 +103,6 @@ if($('#calendar').length) {
         }
     };
 
-    //$('#ad_modification').html("<img src='images/loading_spinner.gif' alt='chargement'>");
-    //$('#ad_modification').show();
-
     xhttp.open("POST", "index.php?controller=agenda&action=getAll", true);
     xhttp.send();
-    
-    /*
-	var myEvents = [
-        {
-          title: 'Test match 1',
-          start: '2018-05-18T16:00:00',
-          end: '2018-05-18T17:00:00',
-		  color: 'red'
-        },
-		{
-          title: 'Test match 2',
-          start: '2018-05-19T14:00:00',
-          end: '2018-05-19T15:00:00',
-		  color: 'blue'
-        }
-      ];
-	$.showCalendar(myEvents);
-        */
 }

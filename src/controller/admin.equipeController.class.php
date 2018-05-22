@@ -20,6 +20,7 @@ class adminEquipeController{
                 $listeEquipes = equipe::findAll();
                 
                 $smarty->assign("title", $title);
+                $smarty->assign('lien_equipe', '1');
                 $smarty->assign('equipes', $listeEquipes);
                 $smarty->Display('admin.equipe.liste.html');
             break;

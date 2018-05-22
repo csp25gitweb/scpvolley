@@ -22,6 +22,7 @@ class adminContactController{
                 $listeAdherents = adherent::findAll();
                 
                 $smarty->assign("title", $title);
+                $smarty->assign('lien_contact', '1');
                 $smarty->assign('adherents', $listeAdherents);
                 $smarty->Display('admin.contact.liste.html');
             break;

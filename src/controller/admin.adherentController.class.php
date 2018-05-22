@@ -17,7 +17,8 @@ class adminAdherentController{
                 
                 $listeAdherents = adherent::findAll();
                 
-                $smarty->assign("title", $title);
+                $smarty->assign('title', $title);
+                $smarty->assign('lien_adherent', '1');
                 $smarty->assign('adherents', $listeAdherents);
                 $smarty->Display('admin.adherent.liste.html');
             break;

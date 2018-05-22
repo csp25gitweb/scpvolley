@@ -1,25 +1,32 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>{$title}</title>
-		
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
-		<link href="css/bootstrap/theme.css" rel="stylesheet" media="screen">
-		<link href="css/styles.css" rel="stylesheet" media="screen">
-		<link href="css/font-awesome.min.css" rel="stylesheet" media="screen">
-    </head>
-    <body>
-		
-		{include 'modal.html'}
+{include 'home.header.html'}
 
-        {if isset($admin) && $admin eq '1'}
-        <div>
-            <a href='index.php?controller=admin&action=adherent&entry=list'>Gestion des adhérents</a>
-            <a href='index.php?controller=admin&action=contact&entry=list'>Gestion des contacts</a>
-            <a href='index.php?controller=admin&action=equipe&entry=list'>Gestion des équipes</a>
-            <a href='index.php?controller=disconnect'>Déconnecter</a>
+{include 'modal.html'}
+
+{if isset($admin) && $admin eq '1'}
+<div class="container">
+<h1>Administration</h1>
+<div class="row">
+    <div class="col-md-3">
+        <div id="sidebar" class="well sidebar-nav">
+        <h5><i class="fa fa-users"></i>
+            <small><b>GESTION DU CLUB</b></small>
+        </h5>
+        <ul class="nav nav-pills nav-stacked">
+            <li {if isset($lien_adherent)}class="active"{/if}><a href="index.php?controller=admin&action=adherent&entry=list">Adhérents</a></li>
+            <li {if isset($lien_contact)}class="active"{/if}><a href="index.php?controller=admin&action=contact&entry=list">Contacts</a></li>
+            <li {if isset($lien_equipe)}class="active"{/if}><a href="index.php?controller=admin&action=equipe&entry=list">Equipes</a></li>
+        </ul>
+        <h5><i class="fa fa-desktop"></i>
+            <small><b>GESTION DU SITE</b></small>
+        </h5>
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="#">Actualités</a></li>
+            <li><a href="#">Partenaires</a></li>
+        </ul>
+                         <h5><i class="fa fa-power-off"></i>
+                                 <a href="#"><small><b>DECONNEXION</b></small></a>
+        </h5>
         </div>
-        {/if}
+    </div>
+    <div class="col-md-9">
+{/if}
